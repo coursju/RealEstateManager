@@ -21,6 +21,8 @@ import com.openclassrooms.realestatemanager.controler.dummy.DummyContent;
  */
 public class EstateListFragment extends Fragment {
 
+
+
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
@@ -49,7 +51,7 @@ public class EstateListFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+        } 
     }
 
     @Override
