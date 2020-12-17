@@ -51,7 +51,7 @@ import static org.junit.Assert.assertThat;
             cursor.moveToFirst();
             Integer i = cursor.getColumnCount();
             Integer p = cursor.getPosition();
-            Log.d(TAG,i+" "+p+" "+cursor.getString(5));//str.toString());
+            Log.d(TAG,i+" "+p+" "+cursor.getString(12));//str.toString());
             cursor.close();
         }
 

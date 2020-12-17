@@ -1,78 +1,104 @@
 package com.openclassrooms.realestatemanager.controler;
 
+import android.content.ContentResolver;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.database.RealEstateDatabase;
+import com.openclassrooms.realestatemanager.injection.Injection;
+import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
+import com.openclassrooms.realestatemanager.model.Estate;
+import com.openclassrooms.realestatemanager.utils.CrudHelper;
+import com.openclassrooms.realestatemanager.utils.FromCursorToEstateList;
+import com.openclassrooms.realestatemanager.utils.GetEstateListCallback;
+import com.openclassrooms.realestatemanager.utils.ImagesSQLiteConverter;
+import com.openclassrooms.realestatemanager.viewmodel.EstateViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class DetailsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "DetailsFragment";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Button buttonTxt;
+    private ImageView img;
+    private String leTest;
 
-    private TextView txt;
+    private ContentResolver mContentResolver;
+    private GetEstateListCallback mGetEstateListCallback;
+    private List<Estate> mEstateList;
 
-    public DetailsFragment() {
-        // Required empty public constructor
-    }
+    private EstateViewModel estateViewModel;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DetailsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DetailsFragment newInstance(String param1, String param2) {
-        DetailsFragment fragment = new DetailsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        configureGetEstateListCallback();
+        mContentResolver = getContext().getContentResolver();
+        new FromCursorToEstateList(mContentResolver, mGetEstateListCallback).execute();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG,"onCreateView");
+
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
+        buttonTxt = view.findViewById(R.id.button);
+        img = view.findViewById(R.id.imageView);
+
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        txt = view.findViewById(R.id.txt);
-//        txt.setText("HELLO WORLD!!!");
+        Log.d(TAG,"onViewCreated");
         super.onViewCreated(view, savedInstanceState);
+
+//        configureViewModel();
+    }
+
+    private void configureViewModel(){
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
+        this.estateViewModel =  ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel.class);
+//        //try unsert
+//        List<Bitmap> bitmap = new ArrayList<Bitmap>();
+//        bitmap.add(BitmapFactory.decodeResource(getContext().getResources(), R.drawable.pict1));
+//        String str = ImagesSQLiteConverter.fromValuesToList(bitmap);
+//        Estate est = new Estate("pour le test",1,1,1,"","","","",true,"","",str);
+//        estateViewModel.createEstate(est);
+    }
+
+    private void configureGetEstateListCallback(){
+        this.mGetEstateListCallback = new GetEstateListCallback() {
+            @Override
+            public void updateEstateList(List<Estate> estateList) {
+                mEstateList = estateList;
+                Log.d(TAG, "into configureGetEstateListCallback "+estateList.get(0).getAgentName());
+                Bitmap btm = ImagesSQLiteConverter.toBitmapListFromJson(mEstateList.get(0).getPhotosString()).get(1);
+
+                img.setImageBitmap(btm);
+            }
+        };
     }
 }

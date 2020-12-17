@@ -26,7 +26,8 @@ public class EstateContentProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         if (getContext() != null){
-            final Cursor cursor = RealEstateDatabase.getInstance(getContext()).mEstateDao().getEstatesWithCursor();
+            final Cursor cursor;
+            cursor = RealEstateDatabase.getInstance(getContext()).mEstateDao().getEstatesWithCursor();
             cursor.setNotificationUri(getContext().getContentResolver(), uri);
             return cursor;
         }

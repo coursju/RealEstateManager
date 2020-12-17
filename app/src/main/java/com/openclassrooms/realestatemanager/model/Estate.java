@@ -5,7 +5,10 @@ import android.nfc.Tag;
 import android.util.Log;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import com.openclassrooms.realestatemanager.utils.ImagesSQLiteConverter;
 
 import java.util.List;
 
@@ -20,26 +23,33 @@ public class Estate {
     private Integer mSurface;
     private Integer mRoomNumber;
     private String mDescription;
-//    private List<Bitmap> mPhotos;
     private String mAddress;
+    private String mCity;
     private String mInterestingSpots;
     private Boolean mSold;
     private String mSoldDate;
     private String mAgentName;
+    private String mPhotosString;
+    @Ignore
+    private List<Bitmap> mPhotosList;
 
-    public Estate( String type, Integer price, Integer surface, Integer roomNumber, String description, /*List<Bitmap> photos,*/ String address, String interestingSpots, Boolean sold, String soldDate, String agentName) {
+    public Estate( String type, Integer price, Integer surface, Integer roomNumber,
+                   String description, String address, String city, String interestingSpots,
+                   Boolean sold, String soldDate, String agentName, String photosString) {
         mType = type;
         mPrice = price;
         mSurface = surface;
         mRoomNumber = roomNumber;
         mDescription = description;
-//        mPhotos = photos;
         mAddress = address;
+        mCity = city;
         mInterestingSpots = interestingSpots;
         mSold = sold;
         mSoldDate = soldDate;
         mAgentName = agentName;
+        mPhotosString = photosString;
 
+//        mPhotosList = ImagesSQLiteConverter.toOptionValuesList(mPhotosString);
         Log.i(TAG,"into constructor");
     }
 
@@ -91,14 +101,6 @@ public class Estate {
         mDescription = description;
     }
 
-//    public List<Bitmap> getPhotos() {
-//        return mPhotos;
-//    }
-//
-//    public void setPhotos(List<Bitmap> photos) {
-//        mPhotos = photos;
-//    }
-
     public String getAddress() {
         return mAddress;
     }
@@ -107,13 +109,15 @@ public class Estate {
         mAddress = address;
     }
 
+    public String getCity() { return mCity; }
+
+    public void setCity(String city) { mCity = city; }
+
     public String getInterestingSpots() {
         return mInterestingSpots;
     }
 
-    public void setInterestingSpots(String interestingSpots) {
-        mInterestingSpots = interestingSpots;
-    }
+    public void setInterestingSpots(String interestingSpots) {mInterestingSpots = interestingSpots; }
 
     public Boolean getSold() {
         return mSold;
@@ -138,6 +142,14 @@ public class Estate {
     public void setAgentName(String agentName) {
         mAgentName = agentName;
     }
+
+    public String getPhotosString() { return mPhotosString;}
+
+    public void setPhotosString(String photosString) { mPhotosString = photosString; }
+
+    public List<Bitmap> getPhotosList() { return mPhotosList; }
+
+    public void setPhotosList(List<Bitmap> photos) { mPhotosList = photos; }
 
     @Override
     public String toString() {
