@@ -46,7 +46,7 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-//        public final LinearLayout mListVerticalLayout;
+        public final LinearLayout mListVerticalLayout;
         public final ImageView mListImage;
         public final TextView mListTypeText;
         public final TextView mListCityText;
@@ -54,7 +54,7 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
 
         public ViewHolder(View view) {
             super(view);
-//            mListVerticalLayout = view.findViewById(R.id.list_vertical_layout);
+            mListVerticalLayout = view.findViewById(R.id.list_vertical_layout);
             mListImage = view.findViewById(R.id.list_image);
             mListTypeText = (TextView) view.findViewById(R.id.list_type_text);
             mListCityText = (TextView) view.findViewById(R.id.list_city_text);

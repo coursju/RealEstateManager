@@ -30,6 +30,7 @@ public class Estate {
     private String mSoldDate;
     private String mAgentName;
     private String mPhotosString;
+    //private String mPhotoDescription  !!! List
     @Ignore
     private List<Bitmap> mPhotosList;
 

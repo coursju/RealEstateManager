@@ -1,8 +1,8 @@
 package com.openclassrooms.realestatemanager.controler;
 
 import android.content.ContentResolver;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,33 +10,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.openclassrooms.realestatemanager.R;
-import com.openclassrooms.realestatemanager.database.RealEstateDatabase;
-import com.openclassrooms.realestatemanager.injection.Injection;
-import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
+import com.openclassrooms.realestatemanager.adapter.DetailsRecyclerViewAdapter;
 import com.openclassrooms.realestatemanager.model.Estate;
-import com.openclassrooms.realestatemanager.utils.CrudHelper;
 import com.openclassrooms.realestatemanager.utils.FromCursorToEstateList;
 import com.openclassrooms.realestatemanager.utils.GetEstateListCallback;
-import com.openclassrooms.realestatemanager.utils.ImagesSQLiteConverter;
-import com.openclassrooms.realestatemanager.viewmodel.EstateViewModel;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
+import static android.widget.LinearLayout.HORIZONTAL;
 
-public class DetailsFragment extends Fragment {
+
+public class DetailsFragment extends Fragment implements OnMapReadyCallback {
 
     private static final String TAG = "DetailsFragment";
 
@@ -48,8 +49,9 @@ public class DetailsFragment extends Fragment {
     private GetEstateListCallback mGetEstateListCallback;
     private List<Estate> mEstateList;
 
-    private EstateViewModel estateViewModel;
-
+    private RecyclerView mRecyclerView;
+    private GoogleMap mMap;
+    private SupportMapFragment mapFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,16 +59,21 @@ public class DetailsFragment extends Fragment {
         configureGetEstateListCallback();
         mContentResolver = getContext().getContentResolver();
         new FromCursorToEstateList(mContentResolver, mGetEstateListCallback).execute();
+        if (mapFragment == null) {
+            GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+            mapFragment = SupportMapFragment.newInstance(options);
+        }
+        mapFragment.getMapAsync(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG,"onCreateView");
-
         View view = inflater.inflate(R.layout.fragment_details, container, false);
-        buttonTxt = view.findViewById(R.id.button);
-        img = view.findViewById(R.id.imageView);
-
+        mRecyclerView = view.findViewById(R.id.details_pics_recyclerview);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         return view;
     }
 
@@ -74,19 +81,7 @@ public class DetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Log.d(TAG,"onViewCreated");
         super.onViewCreated(view, savedInstanceState);
-
-//        configureViewModel();
-    }
-
-    private void configureViewModel(){
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
-        this.estateViewModel =  ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel.class);
-//        //try unsert
-//        List<Bitmap> bitmap = new ArrayList<Bitmap>();
-//        bitmap.add(BitmapFactory.decodeResource(getContext().getResources(), R.drawable.pict1));
-//        String str = ImagesSQLiteConverter.fromValuesToList(bitmap);
-//        Estate est = new Estate("pour le test",1,1,1,"","","","",true,"","",str);
-//        estateViewModel.createEstate(est);
+        getChildFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
     }
 
     private void configureGetEstateListCallback(){
@@ -94,11 +89,28 @@ public class DetailsFragment extends Fragment {
             @Override
             public void updateEstateList(List<Estate> estateList) {
                 mEstateList = estateList;
-                Log.d(TAG, "into configureGetEstateListCallback "+estateList.get(0).getAgentName());
-                Bitmap btm = ImagesSQLiteConverter.toBitmapListFromJson(mEstateList.get(0).getPhotosString()).get(1);
+                Log.d(TAG, "into configureGetEstateListCallback ");
+                mRecyclerView.setAdapter(new DetailsRecyclerViewAdapter(estateList));
 
-                img.setImageBitmap(btm);
             }
         };
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        List<Address> mAddressList = null;
+        try {
+            mAddressList = new Geocoder(getContext()).getFromLocationName("marius et ary leblond , saint pierre, reunion", 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (mAddressList != null && !mAddressList.isEmpty()){
+            LatLng mLatLng = new LatLng(mAddressList.get(0).getLatitude(),mAddressList.get(0).getLongitude());
+            mMap.addMarker(new MarkerOptions().position(mLatLng));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
+        }
+
     }
 }
