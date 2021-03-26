@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.adapter.EstateRecyclerViewAdapter;
+import com.openclassrooms.realestatemanager.helper.EstateList;
 import com.openclassrooms.realestatemanager.model.Estate;
 import com.openclassrooms.realestatemanager.utils.FromCursorToEstateList;
 import com.openclassrooms.realestatemanager.utils.GetEstateListCallback;
@@ -50,7 +51,8 @@ public class EstateListFragment extends Fragment {
         estatesListFloatingBtn = view.findViewById(R.id.estatesListFloatingBtn);
         configureListenerFloatingBtn();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        new FromCursorToEstateList(mContentResolver, mGetEstateListCallback).execute();
+//        new FromCursorToEstateList(mContentResolver, mGetEstateListCallback).execute();
+
 
         return view;
     }
@@ -75,5 +77,10 @@ public class EstateListFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    public void reloadEstateList(){
+        recyclerView.setAdapter(new EstateRecyclerViewAdapter(EstateList.getEstateList()));
+
     }
 }

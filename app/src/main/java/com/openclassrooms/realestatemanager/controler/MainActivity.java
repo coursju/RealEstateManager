@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.helper.EstateList;
 import com.openclassrooms.realestatemanager.injection.Injection;
 import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Estate;
@@ -31,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "--MainActivity";
     private EstateViewModel estateViewModel;
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
+    private EstateListFragment mListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         this.estateViewModel =  ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel.class);
 
        estateViewModel.getEstates().observe(this, estates -> {
-
+           EstateList.setEstateList(estates);
+           mListFragment.reloadEstateList();
             Log.i(TAG,"observer "+estates.get(0).toString());
        });
         //try unsert
@@ -76,17 +79,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void configureFragment(){
+        mListFragment = new EstateListFragment();
 
         if (findViewById(R.id.fragment_land_details) != null) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_land_list, new EstateListFragment(), null)
-                    .replace(R.id.fragment_land_details, new DetailsFragment(), null)
+                    .replace(R.id.fragment_land_list, mListFragment, null)
                     .setReorderingAllowed(true)
                     .addToBackStack("name") // name can be null
                     .commit();
         }else{
+            mListFragment = new EstateListFragment();
             fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_port, new EstateListFragment(), null)
+                    .replace(R.id.fragment_port, mListFragment, null)
                     .setReorderingAllowed(true)
                     .addToBackStack("name") // name can be null
                     .commit();
