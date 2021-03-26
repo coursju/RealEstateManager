@@ -20,6 +20,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBM42q3bmSdlAnPGzGesADPLjRVD6KPLbk" />
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBM42q3bmSdlAnPGzGesADPLjRVD6KPLbk"/>
+
+
         <provider
             android:name=".provider.EstateContentProvider"
             android:authorities="com.openclassrooms.realestatemanager.provider"

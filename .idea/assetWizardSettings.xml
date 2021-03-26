@@ -3,11 +3,14 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+<<<<<<< HEAD
         <entry key="imageWizard">
           <value>
             <PersistentState />
           </value>
         </entry>
+=======
+>>>>>>> origin/master
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -23,7 +26,11 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
+<<<<<<< HEAD
                                       <entry key="url" value="file:$USER_HOME$/Android/Sdk/icons/material/materialicons/remove/baseline_remove_24.xml" />
+=======
+                                      <entry key="url" value="file:$USER_HOME$/Android/Sdk/icons/material/materialicons/location_on/baseline_location_on_24.xml" />
+>>>>>>> origin/master
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,7 +40,11 @@
                         </option>
                         <option name="values">
                           <map>
+<<<<<<< HEAD
                             <entry key="outputName" value="ic_baseline_remove_24" />
+=======
+                            <entry key="outputName" value="ic_baseline_location_on_24" />
+>>>>>>> origin/master
                           </map>
                         </option>
                       </PersistentState>
