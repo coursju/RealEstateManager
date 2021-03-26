@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private EstateViewModel estateViewModel;
     private FragmentManager fragmentManager;
     private EstateListFragment mListFragment;
+//    private DetailsFragment mDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         configureFragment();
         configureViewModel();
     }
@@ -79,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void configureFragment(){
-        mListFragment = new EstateListFragment();
+        mListFragment = new EstateListFragment(this);
 
         if (findViewById(R.id.fragment_land_details) != null) {
             fragmentManager.beginTransaction()
@@ -88,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
                     .addToBackStack("name") // name can be null
                     .commit();
         }else{
-            mListFragment = new EstateListFragment();
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_port, mListFragment, null)
                     .setReorderingAllowed(true)
@@ -96,5 +102,23 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
+    }
+
+    public void showFragmentDetails(int position){
+        DetailsFragment mDetailsFragment = new DetailsFragment(position);
+
+        if (findViewById(R.id.fragment_land_details) != null) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_land_details, mDetailsFragment, null)
+                    .setReorderingAllowed(true)
+                    .addToBackStack("name") // name can be null
+                    .commit();
+        }else{
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_port, mDetailsFragment, null)
+                    .setReorderingAllowed(true)
+                    .addToBackStack("name") // name can be null
+                    .commit();
+        }
     }
 }

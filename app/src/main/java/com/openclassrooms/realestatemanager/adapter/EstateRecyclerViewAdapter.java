@@ -1,16 +1,22 @@
 package com.openclassrooms.realestatemanager.adapter;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.controler.DetailsFragment;
+import com.openclassrooms.realestatemanager.controler.MainActivity;
 import com.openclassrooms.realestatemanager.model.Estate;
 import com.openclassrooms.realestatemanager.utils.ImagesSQLiteConverter;
 
@@ -19,9 +25,11 @@ import java.util.List;
 public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecyclerViewAdapter.ViewHolder> {
 
     private final List<Estate> mValues;
+    private MainActivity mActivity;
 
-    public EstateRecyclerViewAdapter(List<Estate> items) {
+    public EstateRecyclerViewAdapter(List<Estate> items, Activity activity) {
         mValues = items;
+        mActivity = (MainActivity) activity;
     }
 
     @Override
@@ -58,6 +66,13 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
             mListTypeText = (TextView) view.findViewById(R.id.list_type_text);
             mListCityText = (TextView) view.findViewById(R.id.list_city_text);
             mListPriceText = (TextView) view.findViewById(R.id.list_price_text);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("recycler","clicked!!");
+                    mActivity.showFragmentDetails(getAdapterPosition());
+                }
+            });
         }
 
         @Override

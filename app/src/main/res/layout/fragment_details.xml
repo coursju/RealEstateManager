@@ -300,7 +300,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp" />
 
-            <fragment
+            <FrameLayout
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.MapFragment"
                 android:layout_width="match_parent"

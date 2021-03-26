@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.adapter.DetailsRecyclerViewAdapter;
+import com.openclassrooms.realestatemanager.helper.EstateList;
 import com.openclassrooms.realestatemanager.model.Estate;
 import com.openclassrooms.realestatemanager.utils.FromCursorToEstateList;
 import com.openclassrooms.realestatemanager.utils.GetEstateListCallback;
@@ -50,18 +51,25 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
 
     private ContentResolver mContentResolver;
     private GetEstateListCallback mGetEstateListCallback;
-    private List<Estate> mEstateList;
-
+    private View view;
     private RecyclerView mRecyclerView;
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
+
+    private int mPosition;
+
+    public DetailsFragment(){}
+
+    public DetailsFragment(int mPosition) {
+        this.mPosition = mPosition;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configureGetEstateListCallback();
         mContentResolver = getContext().getContentResolver();
-        new FromCursorToEstateList(mContentResolver, mGetEstateListCallback).execute();
+//        new FromCursorToEstateList(mContentResolver, mGetEstateListCallback).execute();
         if (mapFragment == null) {
             GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
             mapFragment = SupportMapFragment.newInstance(options);
@@ -72,13 +80,15 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG,"onCreateView");
-        View view = inflater.inflate(R.layout.fragment_details, container, false);
-        mRecyclerView = view.findViewById(R.id.details_pics_recyclerview);
-        estateDetailsFloatingBtn = view.findViewById(R.id.estateDetailsFloatingBtn);
+
+        view = inflater.inflate(R.layout.fragment_details, container, false);
+
+        configureView();
+
         configureDetailsFloatingBtnListener();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        configureRecyclerView();
+
         return view;
     }
 
@@ -93,7 +103,6 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
         this.mGetEstateListCallback = new GetEstateListCallback() {
             @Override
             public void updateEstateList(List<Estate> estateList) {
-                mEstateList = estateList;
                 Log.d(TAG, "into configureGetEstateListCallback ");
                 mRecyclerView.setAdapter(new DetailsRecyclerViewAdapter(estateList));
 
@@ -119,6 +128,12 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+    private void configureView(){
+        mRecyclerView = view.findViewById(R.id.details_pics_recyclerview);
+        estateDetailsFloatingBtn = view.findViewById(R.id.estateDetailsFloatingBtn);
+
+    }
+
     private void configureDetailsFloatingBtnListener(){
         this.estateDetailsFloatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,5 +143,11 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
                 startActivity(intent);
             }
         });
+    }
+
+    private void configureRecyclerView(){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
     }
 }

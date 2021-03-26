@@ -30,10 +30,16 @@ public class EstateListFragment extends Fragment {
 
     private ContentResolver mContentResolver;
     private GetEstateListCallback mGetEstateListCallback;
-//    private List<Estate> mEstateList;
     private RecyclerView recyclerView;
     private Context context;
     private FloatingActionButton estatesListFloatingBtn;
+    private MainActivity mMainActivity;
+
+    public EstateListFragment(MainActivity mainActivity){
+        mMainActivity = mainActivity;
+    }
+
+    public EstateListFragment(){}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,7 @@ public class EstateListFragment extends Fragment {
         configureListenerFloatingBtn();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 //        new FromCursorToEstateList(mContentResolver, mGetEstateListCallback).execute();
+        reloadEstateList();
 
 
         return view;
@@ -63,7 +70,7 @@ public class EstateListFragment extends Fragment {
             public void updateEstateList(List<Estate> estateList) {
 //                mEstateList = estateList;
                 Log.d(TAG, "into configureGetEstateListCallback ");
-                recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList));
+                recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList, mMainActivity));
 
             }
         };
@@ -80,7 +87,6 @@ public class EstateListFragment extends Fragment {
     }
 
     public void reloadEstateList(){
-        recyclerView.setAdapter(new EstateRecyclerViewAdapter(EstateList.getEstateList()));
-
+        recyclerView.setAdapter(new EstateRecyclerViewAdapter(EstateList.getEstateList(), mMainActivity));
     }
 }
