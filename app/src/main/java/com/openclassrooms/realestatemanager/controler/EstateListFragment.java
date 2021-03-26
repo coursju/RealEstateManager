@@ -2,26 +2,23 @@ package com.openclassrooms.realestatemanager.controler;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.adapter.EstateRecyclerViewAdapter;
-import com.openclassrooms.realestatemanager.controler.dummy.DummyContent;
 import com.openclassrooms.realestatemanager.model.Estate;
 import com.openclassrooms.realestatemanager.utils.FromCursorToEstateList;
 import com.openclassrooms.realestatemanager.utils.GetEstateListCallback;
-import com.openclassrooms.realestatemanager.utils.ImagesSQLiteConverter;
 
 import java.util.List;
 
@@ -35,6 +32,7 @@ public class EstateListFragment extends Fragment {
 //    private List<Estate> mEstateList;
     private RecyclerView recyclerView;
     private Context context;
+    private FloatingActionButton estatesListFloatingBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +47,8 @@ public class EstateListFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
         context = view.getContext();
+        estatesListFloatingBtn = view.findViewById(R.id.estatesListFloatingBtn);
+        configureListenerFloatingBtn();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         new FromCursorToEstateList(mContentResolver, mGetEstateListCallback).execute();
 
@@ -65,5 +65,15 @@ public class EstateListFragment extends Fragment {
 
             }
         };
+    }
+
+    private void configureListenerFloatingBtn(){
+        this.estatesListFloatingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CreateEstateActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

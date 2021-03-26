@@ -1,7 +1,5 @@
 package com.openclassrooms.realestatemanager.adapter;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +8,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.openclassrooms.realestatemanager.R;
-import com.openclassrooms.realestatemanager.controler.dummy.DummyContent.DummyItem;
 import com.openclassrooms.realestatemanager.model.Estate;
 import com.openclassrooms.realestatemanager.utils.ImagesSQLiteConverter;
 
@@ -46,7 +45,7 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-//        public final LinearLayout mListVerticalLayout;
+        public final LinearLayout mListVerticalLayout;
         public final ImageView mListImage;
         public final TextView mListTypeText;
         public final TextView mListCityText;
@@ -54,7 +53,7 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
 
         public ViewHolder(View view) {
             super(view);
-//            mListVerticalLayout = view.findViewById(R.id.list_vertical_layout);
+            mListVerticalLayout = view.findViewById(R.id.list_vertical_layout);
             mListImage = view.findViewById(R.id.list_image);
             mListTypeText = (TextView) view.findViewById(R.id.list_type_text);
             mListCityText = (TextView) view.findViewById(R.id.list_city_text);

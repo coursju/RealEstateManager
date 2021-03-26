@@ -6,25 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/fragment2"
-        android:name="com.openclassrooms.realestatemanager.controler.EstateListFragment"
-        android:layout_width="354dp"
-        android:layout_height="643dp"
-        android:layout_marginStart="4dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <fragment
-        android:id="@+id/fragment3"
-        android:name="com.openclassrooms.realestatemanager.controler.DetailsFragment"
-        android:layout_width="669dp"
-        android:layout_height="653dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        <FrameLayout
+            android:id="@+id/fragment_land_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2" />
+
+        <FrameLayout
+            android:id="@+id/fragment_land_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

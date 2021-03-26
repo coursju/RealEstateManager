@@ -6,8 +6,12 @@ import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -21,18 +25,23 @@ import com.openclassrooms.realestatemanager.viewmodel.EstateViewModel;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "--MainActivity";
     private EstateViewModel estateViewModel;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        configureCursorSize();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        configureCursorSize();
-//        configureViewModel();
+        fragmentManager = getSupportFragmentManager();
+
+        configureFragment();
+        configureViewModel();
     }
 
     private void configureViewModel(){
@@ -64,5 +73,24 @@ public class MainActivity extends AppCompatActivity {
 
     public EstateViewModel getEstateViewModel() {
         return estateViewModel;
+    }
+
+    public void configureFragment(){
+
+        if (findViewById(R.id.fragment_land_details) != null) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_land_list, new EstateListFragment(), null)
+                    .replace(R.id.fragment_land_details, new DetailsFragment(), null)
+                    .setReorderingAllowed(true)
+                    .addToBackStack("name") // name can be null
+                    .commit();
+        }else{
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_port, new EstateListFragment(), null)
+                    .setReorderingAllowed(true)
+                    .addToBackStack("name") // name can be null
+                    .commit();
+        }
+
     }
 }
