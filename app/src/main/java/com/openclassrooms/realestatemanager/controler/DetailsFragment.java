@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,21 +43,36 @@ import static android.widget.LinearLayout.HORIZONTAL;
 
 public class DetailsFragment extends Fragment implements OnMapReadyCallback {
 
-    private static final String TAG = "DetailsFragment";
+    private static final String TAG = DetailsFragment.class.getSimpleName();
 
     private Button buttonTxt;
     private ImageView img;
     private String leTest;
     private FloatingActionButton estateDetailsFloatingBtn;
+    private RecyclerView mRecyclerView;
 
     private ContentResolver mContentResolver;
     private GetEstateListCallback mGetEstateListCallback;
     private View view;
-    private RecyclerView mRecyclerView;
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
 
     private int mPosition;
+
+    private TextView detailsTypeText;
+    private TextView detailsStatutText;
+    private TextView detailsPriceText;
+    private TextView detailsAddressText;
+    private TextView detailsCityText;
+    private TextView detailsDescriptionText;
+    private TextView detailsSurfaceText;
+    private TextView detailsNumberOfRoomsText;
+    private TextView detailsPointsOfInterestsText;
+    private TextView detailsPublicationDateText;
+    private TextView detailsSoldDateText;
+    private TextView detailsAgentNameText;
+
+    private Estate estate;
 
     public DetailsFragment(){}
 
@@ -83,6 +99,11 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
 
         view = inflater.inflate(R.layout.fragment_details, container, false);
 
+        if (EstateList.getEstateList() != null) {
+            this.estate = EstateList.getEstateList().get(mPosition);
+        }
+
+        bindView();
         configureView();
 
         configureDetailsFloatingBtnListener();
@@ -116,7 +137,8 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
 
         List<Address> mAddressList = null;
         try {
-            mAddressList = new Geocoder(getContext()).getFromLocationName("marius et ary leblond , saint pierre, reunion", 1);
+            if (estate != null)
+            mAddressList = new Geocoder(getContext()).getFromLocationName(estate.getAddress()+" "+estate.getCity()+" New York", 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,13 +147,40 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
             mMap.addMarker(new MarkerOptions().position(mLatLng));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
         }
+    }
 
+    private void bindView(){
+        mRecyclerView = view.findViewById(R.id.details_pics_recyclerview);
+        estateDetailsFloatingBtn = view.findViewById(R.id.estateDetailsFloatingBtn);
+        detailsTypeText = view.findViewById(R.id.details_type_text);
+        detailsStatutText = view.findViewById(R.id.details_statut_text);
+        detailsPriceText = view.findViewById(R.id.details_price_text);
+        detailsAddressText = view.findViewById(R.id.details_address_text);
+        detailsCityText = view.findViewById(R.id.details_city_text);
+        detailsDescriptionText = view.findViewById(R.id.details_description_text);
+        detailsSurfaceText = view.findViewById(R.id.details_surface_text);
+        detailsNumberOfRoomsText = view.findViewById(R.id.details_number_of_rooms_text);
+        detailsPointsOfInterestsText = view.findViewById(R.id.details_points_of_interests_text);
+        detailsPublicationDateText = view.findViewById(R.id.details_publication_date_text);
+        detailsSoldDateText = view.findViewById(R.id.details_sold_date_text);
+        detailsAgentNameText = view.findViewById(R.id.details_agent_name_text);
     }
 
     private void configureView(){
-        mRecyclerView = view.findViewById(R.id.details_pics_recyclerview);
-        estateDetailsFloatingBtn = view.findViewById(R.id.estateDetailsFloatingBtn);
-
+        if (estate != null){
+            detailsTypeText.setText(estate.getType());
+//            detailsStatutText.setText(estate.getSold());
+            detailsPriceText.setText(estate.getPrice().toString());
+            detailsAddressText.setText(estate.getAddress());
+            detailsCityText.setText(estate.getCity());
+            detailsDescriptionText.setText(estate.getDescription());
+            detailsSurfaceText.setText(estate.getSurface().toString());
+            detailsNumberOfRoomsText.setText(estate.getRoomNumber().toString());
+            detailsPointsOfInterestsText.setText(estate.getInterestingSpots());
+////            detailsPublicationDateText.setText(estate.g);
+            detailsSoldDateText.setText(estate.getSoldDate());
+            detailsAgentNameText.setText(estate.getAgentName());
+        }
     }
 
     private void configureDetailsFloatingBtnListener(){

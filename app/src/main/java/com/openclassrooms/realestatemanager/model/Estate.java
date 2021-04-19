@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 public class Estate {
 
-    private static final String TAG = "--Estate";
+    private static final String TAG = "Estate";
     @PrimaryKey(autoGenerate = true)
     private long id;
     private String mType;
@@ -26,7 +26,8 @@ public class Estate {
     private String mAddress;
     private String mCity;
     private String mInterestingSpots;
-    private Boolean mSold;
+    private Boolean mSold;// convert to string
+    //private String mPublicationDate;   //!!! ajouter
     private String mSoldDate;
     private String mAgentName;
     private String mPhotosString;

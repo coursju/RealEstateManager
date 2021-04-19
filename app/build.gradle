@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -75,5 +76,7 @@ dependencies {
     //Gson
     implementation 'com.google.code.gson:gson:2.8.6'
 
-
+    //ButterKnife
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 }
