@@ -1,7 +1,5 @@
 package com.openclassrooms.realestatemanager.controler;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -12,6 +10,6 @@ public class CreateEstateActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_create_estate);
+        setContentView(R.layout.activity_create_estate);
     }
 }

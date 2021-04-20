@@ -11,16 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.model.Estate;
+import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
+import com.openclassrooms.realestatemanager.model.Photo;
 import com.openclassrooms.realestatemanager.utils.ImagesSQLiteConverter;
 
 import java.util.List;
 
 public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<DetailsRecyclerViewAdapter.ViewHolder>{
 
-    private List<Estate> mEstateList;
+    private EstateWithPhotos estateWithPhotos;
+    private List<Photo> photoList;
 
-    public DetailsRecyclerViewAdapter(List<Estate> estateList){
-        mEstateList = estateList;
+    public DetailsRecyclerViewAdapter(EstateWithPhotos estateWithPhotos){
+        this.estateWithPhotos = estateWithPhotos;
+        this.photoList = estateWithPhotos.getPhotoList();
     }
 
     @NonNull
@@ -32,13 +36,13 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<DetailsRecy
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Bitmap bitmap = ImagesSQLiteConverter.toBitmapListFromJson(mEstateList.get(position).getPhotosString()).get(0);
-        holder.mImageView.setImageBitmap(bitmap);
+//        Bitmap bitmap = ImagesSQLiteConverter.toBitmapListFromJson(mEstateList.get(position).getPhotosString()).get(0);
+//        holder.mImageView.setImageBitmap(bitmap);
     }
 
     @Override
     public int getItemCount() {
-        return mEstateList.size();
+        return photoList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

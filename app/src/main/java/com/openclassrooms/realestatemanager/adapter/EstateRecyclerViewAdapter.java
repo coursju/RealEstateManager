@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.adapter;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,24 +9,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.openclassrooms.realestatemanager.R;
-import com.openclassrooms.realestatemanager.controler.DetailsFragment;
 import com.openclassrooms.realestatemanager.controler.MainActivity;
-import com.openclassrooms.realestatemanager.model.Estate;
-import com.openclassrooms.realestatemanager.utils.ImagesSQLiteConverter;
+import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
 
 import java.util.List;
 
 public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Estate> mValues;
+    private static final String TAG = "EstateRecyclerViewAdapt";
+    private final List<EstateWithPhotos> mValues;
     private MainActivity mActivity;
 
-    public EstateRecyclerViewAdapter(List<Estate> items, Activity activity) {
+    public EstateRecyclerViewAdapter(List<EstateWithPhotos> items, Activity activity) {
         mValues = items;
         mActivity = (MainActivity) activity;
     }
@@ -40,11 +37,15 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Bitmap bitmap = ImagesSQLiteConverter.toBitmapListFromJson(mValues.get(position).getPhotosString()).get(0);
-        holder.mListImage.setImageBitmap(bitmap);
-        holder.mListTypeText.setText(mValues.get(position).getType());
-        holder.mListCityText.setText(mValues.get(position).getCity());
-        holder.mListPriceText.setText(String.valueOf(mValues.get(position).getPrice()));
+        if (mValues.get(position).getPhotoList() != null) {
+            if (mValues.get(position).getPhotoList().size() != 0) {
+                Bitmap bitmap = mValues.get(position).getPhotoList().get(0).getPhoto();
+                holder.mListImage.setImageBitmap(bitmap);
+            }
+        }
+        holder.mListTypeText.setText(mValues.get(position).getEstate().getType());
+        holder.mListCityText.setText(mValues.get(position).getEstate().getCity());
+        holder.mListPriceText.setText(String.valueOf(mValues.get(position).getEstate().getPrice()));
     }
 
     @Override
@@ -69,7 +70,7 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i("recycler","clicked!!");
+                    Log.i(EstateRecyclerViewAdapter.TAG,"item clicked!!");
                     mActivity.showFragmentDetails(getAdapterPosition());
                 }
             });

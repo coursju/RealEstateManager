@@ -17,18 +17,18 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.database.dao.EstateDao;
 import com.openclassrooms.realestatemanager.model.Estate;
+import com.openclassrooms.realestatemanager.model.Photo;
 import com.openclassrooms.realestatemanager.utils.ImagesSQLiteConverter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Database(entities = {Estate.class}, version = 1, exportSchema = false)
-@TypeConverters({ImagesSQLiteConverter.class})
+@Database(entities = {Estate.class, Photo.class}, version = 1)
 public abstract class RealEstateDatabase extends RoomDatabase{
 
     private static Context mContext;
 
-    private static final String TAG = "--RealEstateDatabase";
+    private static final String TAG = "RealEstateDatabase";
     // --- SINGLETON ---
     private static volatile RealEstateDatabase INSTANCE;
 
@@ -53,35 +53,25 @@ public abstract class RealEstateDatabase extends RoomDatabase{
         return INSTANCE;
     }
 
-    //if bug look at callback import androidx.room
     private static RoomDatabase.Callback prepopulateDatabase(){
         return new RoomDatabase.Callback() {
 
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
-                List<Bitmap> bitmap = new ArrayList<Bitmap>();
-                Bitmap bitmap1 = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pict1);
-                Bitmap bitmap2 = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pict3);
-
-                bitmap.add(bitmap1);
-                bitmap.add(bitmap2);
-
-                String str = ImagesSQLiteConverter.fromBitmapListToJson(bitmap);
 
                 ContentValues contentValues = new ContentValues();
-                contentValues.put("mType", "Loft");
-                contentValues.put("mPrice", 100000);
-                contentValues.put("mSurface", 100);
-                contentValues.put("mRoomNumber", 10);
-                contentValues.put("mDescription", "Beautiful loft, center of NY");
-                contentValues.put("mAddress", "dans ton Q");
-                contentValues.put("mCity", "Brooklyn");
-                contentValues.put("mInterestingSpots", "school, hospital, markets");
-                contentValues.put("mSold", false);
-                contentValues.put("mSoldDate", "---");
-                contentValues.put("mAgentName", "Brian Brian");
-                contentValues.put("mPhotosString", str);
+                contentValues.put("type", "Loft");
+                contentValues.put("price", 100000);
+                contentValues.put("surface", 100);
+                contentValues.put("roomNumber", 10);
+                contentValues.put("description", "Beautiful loft, center of NY");
+                contentValues.put("address", "dans ton Q");
+                contentValues.put("city", "Brooklyn");
+                contentValues.put("interestingSpots", "school, hospital, markets");
+                contentValues.put("sold", false);
+                contentValues.put("soldDate", "---");
+                contentValues.put("agentName", "Brian Brian");
 
                 Log.i(TAG,"callback"+contentValues.toString());
 
@@ -89,5 +79,4 @@ public abstract class RealEstateDatabase extends RoomDatabase{
             }
         };
     }
-
 }
