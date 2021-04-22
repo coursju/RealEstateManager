@@ -17,8 +17,19 @@
     <string name="details_publication_date_title">Publication date:</string>
     <string name="details_sold_date_title">Sold date:</string>
     <string name="details_agent_name_title">Agent name:</string>
+    <string name="details_add_gallery_button">Add from gallery</string>
+    <string name="details_add_camera_button">Take a picture</string>
 
     <!-- CREATE -->
     <string name="create_submit_button">Create estate</string>
+    <string name="create_photo_txt_hint">Add Short Description here</string>
+    <string name="create_add_short_txt_button">Valid the text</string>
+
+    <!-- SPINNER-->
+    <string-array name="statut_array">
+        <item>On sale</item>
+        <item>Sold</item>
+    </string-array>
+
 
 </resources>

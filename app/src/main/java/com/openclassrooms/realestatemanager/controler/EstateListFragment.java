@@ -19,7 +19,7 @@ import com.openclassrooms.realestatemanager.adapter.EstateRecyclerViewAdapter;
 import com.openclassrooms.realestatemanager.injection.Injection;
 import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
 import com.openclassrooms.realestatemanager.utils.GetEstateListCallback;
-import com.openclassrooms.realestatemanager.viewmodel.EstateViewModel;
+import com.openclassrooms.realestatemanager.viewmodel.EstateListViewModel;
 
 
 public class EstateListFragment extends Fragment {
@@ -31,7 +31,7 @@ public class EstateListFragment extends Fragment {
     private Context context;
     private FloatingActionButton estatesListFloatingBtn;
     private MainActivity mMainActivity;
-    private EstateViewModel estateViewModel;
+    private EstateListViewModel estateListViewModel;
 
     public EstateListFragment(MainActivity mainActivity){
         mMainActivity = mainActivity;
@@ -88,8 +88,8 @@ public class EstateListFragment extends Fragment {
 
     public void configureViewModel(){
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
-        this.estateViewModel =  ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel.class);
-        estateViewModel.getEstateWithPhotos().observe(this, estates -> {
+        this.estateListViewModel =  ViewModelProviders.of(this, mViewModelFactory).get(EstateListViewModel.class);
+        estateListViewModel.getEstateWithPhotos().observe(this, estates -> {
             recyclerView.setAdapter(new EstateRecyclerViewAdapter(estates, mMainActivity));
             Log.i(TAG,"EstateViewModel observer ");
         });

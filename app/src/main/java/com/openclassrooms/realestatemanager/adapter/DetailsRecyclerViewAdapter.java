@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.adapter;
 
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.openclassrooms.realestatemanager.R;
-import com.openclassrooms.realestatemanager.model.Estate;
 import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
 import com.openclassrooms.realestatemanager.model.Photo;
-import com.openclassrooms.realestatemanager.utils.ImagesSQLiteConverter;
 
 import java.util.List;
 

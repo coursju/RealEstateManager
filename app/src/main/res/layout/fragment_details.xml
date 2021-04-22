@@ -141,7 +141,18 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="40dp" />
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/details_images_title"
+                style="@style/Text_title_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/details_images_title" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/details_pics_recyclerview"

@@ -1,85 +1,52 @@
 package com.openclassrooms.realestatemanager.viewmodel;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.openclassrooms.realestatemanager.model.Estate;
-import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
 import com.openclassrooms.realestatemanager.model.Photo;
-import com.openclassrooms.realestatemanager.repositories.EstateDataRepository;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 public class EstateViewModel extends ViewModel {
+//    private MutableLiveData<Estate> estate;
+    private MutableLiveData<List<Photo>> photoList;
 
-    private final EstateDataRepository mEstateDataSource;
-    private final Executor executor;
-    private int selectedEstate;
+//    public LiveData<Estate> getEstate() {
+//        return estate;
+//    }
+//
+//    public void setEstate(Estate estate) {
+//        this.estate.setValue(estate);
+//    }
 
-    public EstateViewModel(EstateDataRepository estateDataSource, Executor executor) {
-        mEstateDataSource = estateDataSource;
-        this.executor = executor;
-        this.selectedEstate = 0;
+    public LiveData<List<Photo>> getPhotoList() {
+        if (photoList == null){
+            photoList = new MutableLiveData<List<Photo>>();
+        }
+        return photoList;
     }
 
-    public int getSelectedEstate(){return this.selectedEstate;}
-
-    public void setSelectedEstate(int selectedEstate){this.selectedEstate = selectedEstate;}
-
-    public LiveData<List<EstateWithPhotos>> getEstateWithPhotos() {
-        return mEstateDataSource.getEstateWithPhotos();
+    public void setPhotoList(List<Photo> photoList) {
+        if (this.photoList == null){
+            this.photoList = new MutableLiveData<List<Photo>>();
+        }
+        this.photoList.setValue(photoList);
     }
 
-    // --Estate--
-    public long createEstate(Estate estate) {
-        final long[] id = new long[1];
-        executor.execute(() -> {
-            id[0] = mEstateDataSource.createEstate(estate);
-        });
-        return id[0];
+    public void addPhoto(Photo photo){
+        if (this.photoList == null){
+            this.photoList = new MutableLiveData<>(new ArrayList<>());
+        }
+        List<Photo> list = photoList.getValue();
+        list.add(photo);
+        photoList.setValue(list);
     }
 
-    public void updateEstate(Estate estate) {
-        executor.execute(() -> {
-            mEstateDataSource.updateEstate(estate);
-        });
-    }
-
-    // --Photo--
-    public void createPhoto(Photo photo) {
-        executor.execute(() -> {
-            mEstateDataSource.createPhoto(photo);
-        });
-    }
-
-    public void createPhoto(Photo... photo) {
-        executor.execute(() -> {
-            mEstateDataSource.createPhoto(photo);
-        });
-    }
-
-    public void updatePhoto(Photo photo) {
-        executor.execute(() -> {
-            mEstateDataSource.updatePhoto(photo);
-        });
-    }
-
-    public void updatePhoto(Photo... photo) {
-        executor.execute(() -> {
-            mEstateDataSource.updatePhoto(photo);
-        });
-    }
-
-    public void deletePhoto(Photo photo) {
-        executor.execute(() -> {
-            mEstateDataSource.deletePhoto(photo);
-        });
-    }
-
-    public void deletePhoto(Photo... photo) {
-        executor.execute(() -> {
-            mEstateDataSource.deletePhoto(photo);
-        });
+    public void removePhoto(int index){
+        if (this.photoList != null){
+            photoList.getValue().remove(index);
+        }
     }
 }

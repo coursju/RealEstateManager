@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.openclassrooms.realestatemanager.repositories.EstateDataRepository;
-import com.openclassrooms.realestatemanager.viewmodel.EstateViewModel;
+import com.openclassrooms.realestatemanager.viewmodel.EstateListViewModel;
 
 import java.util.concurrent.Executor;
 
@@ -21,8 +21,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(EstateViewModel.class)) {
-            return (T) new EstateViewModel(mEstateDataSource, executor);
+        if (modelClass.isAssignableFrom(EstateListViewModel.class)) {
+            return (T) new EstateListViewModel(mEstateDataSource, executor);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

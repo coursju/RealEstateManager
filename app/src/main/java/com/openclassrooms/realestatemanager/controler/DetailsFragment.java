@@ -32,7 +32,7 @@ import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Estate;
 import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
 import com.openclassrooms.realestatemanager.utils.GetEstateListCallback;
-import com.openclassrooms.realestatemanager.viewmodel.EstateViewModel;
+import com.openclassrooms.realestatemanager.viewmodel.EstateListViewModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -66,7 +66,7 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
     private TextView detailsAgentNameText;
 
     private EstateWithPhotos estateWithPhotos;
-    private EstateViewModel estateViewModel;
+    private EstateListViewModel estateListViewModel;
 
     public DetailsFragment(){}
 
@@ -140,8 +140,8 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
 
     public void configureViewModel(){
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
-        this.estateViewModel =  ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel.class);
-        estateViewModel.getEstateWithPhotos().observe(this, estates -> {
+        this.estateListViewModel =  ViewModelProviders.of(this, mViewModelFactory).get(EstateListViewModel.class);
+        estateListViewModel.getEstateWithPhotos().observe(this, estates -> {
             Log.i(TAG,"EstateViewModel observer ");
 
             estateWithPhotos = estates.get(mPosition);
