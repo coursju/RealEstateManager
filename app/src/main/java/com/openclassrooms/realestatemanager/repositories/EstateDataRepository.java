@@ -1,5 +1,7 @@
 package com.openclassrooms.realestatemanager.repositories;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 
 import com.openclassrooms.realestatemanager.database.dao.EstateDao;
@@ -20,16 +22,20 @@ public class EstateDataRepository {
     public LiveData<List<EstateWithPhotos>> getEstateWithPhotos(){ return this.mEstateDao.getEstateWithPhotos(); }
 
     // --- CREATE ---
-    public long createEstate(Estate estate){ return mEstateDao.insertEstate(estate); }
-    public void createPhoto(Photo photo){  mEstateDao.insertPhoto(photo); }
+    public long createEstate(Estate estate){
+        long id = mEstateDao.insertEstate(estate);
+        Log.i(TAG, String.valueOf(id));
+        return id;//mEstateDao.insertEstate(estate);
+        }
+    public void createPhoto(Photo photo){   mEstateDao.insertPhoto(photo); }
     public void createPhoto(Photo... photo){  mEstateDao.insertPhotos(photo); }
 
     // --- UPDATE ---
-    public void updateEstate(Estate estate){  mEstateDao.updateEstate(estate); }
-    public void updatePhoto(Photo photo){  mEstateDao.updatePhoto(photo); }
+    public int updateEstate(Estate estate){  return mEstateDao.updateEstate(estate); }
+    public int updatePhoto(Photo photo){  return mEstateDao.updatePhoto(photo); }
     public void updatePhoto(Photo... photo){  mEstateDao.updatePhotos(photo); }
 
     // --- DELETE ---
-    public void deletePhoto(Photo photo){  mEstateDao.deletePhoto(photo); }
+    public int deletePhoto(Photo photo){  return mEstateDao.deletePhoto(photo); }
     public void deletePhoto(Photo... photo){  mEstateDao.deletePhotos(photo); }
 }

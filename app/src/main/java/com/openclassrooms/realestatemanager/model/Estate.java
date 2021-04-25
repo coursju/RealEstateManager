@@ -19,7 +19,7 @@ public class Estate {
     private String address;
     private String city;
     private String interestingSpots;
-    private Boolean sold;// convert to string
+    private Boolean sold;
     private String publicationDate;
     private String soldDate;
     private String agentName;

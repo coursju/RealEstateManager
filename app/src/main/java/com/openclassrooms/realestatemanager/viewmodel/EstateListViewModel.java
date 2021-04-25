@@ -10,6 +10,7 @@ import com.openclassrooms.realestatemanager.repositories.EstateDataRepository;
 
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class EstateListViewModel extends ViewModel {
 
@@ -33,11 +34,11 @@ public class EstateListViewModel extends ViewModel {
 
     // --Estate--
     public long createEstate(Estate estate) {
-        final long[] id = new long[1];
+        AtomicLong id = new AtomicLong();
         executor.execute(() -> {
-            id[0] = mEstateDataSource.createEstate(estate);
+            id.set(mEstateDataSource.createEstate(estate));
         });
-        return id[0];
+        return id.get();
     }
 
     public void updateEstate(Estate estate) {

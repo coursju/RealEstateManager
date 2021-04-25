@@ -45,7 +45,6 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
     private FloatingActionButton estateDetailsFloatingBtn;
     private RecyclerView mRecyclerView;
 
-    private GetEstateListCallback mGetEstateListCallback;
     private View view;
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
@@ -77,7 +76,6 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        configureGetEstateListCallback();
         if (mapFragment == null) {
             GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
             mapFragment = SupportMapFragment.newInstance(options);
@@ -104,17 +102,6 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState);
         getChildFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
     }
-
-//    private void configureGetEstateListCallback(){
-//        this.mGetEstateListCallback = new GetEstateListCallback() {
-//            @Override
-//            public void updateEstateList(List<Estate> estateList) {
-//                Log.d(TAG, "into configureGetEstateListCallback ");
-//                mRecyclerView.setAdapter(new DetailsRecyclerViewAdapter(estateList));
-//
-//            }
-//        };
-//    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -148,7 +135,7 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
             configureView();
             configureRecyclerView();
             updateMapAddress();
-            mRecyclerView.setAdapter(new DetailsRecyclerViewAdapter(estateWithPhotos));
+            mRecyclerView.setAdapter(new DetailsRecyclerViewAdapter(estateWithPhotos.getPhotoList()));
         });
     }
 
@@ -163,7 +150,7 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
         detailsDescriptionText = view.findViewById(R.id.details_description_text);
         detailsSurfaceText = view.findViewById(R.id.details_surface_text);
         detailsNumberOfRoomsText = view.findViewById(R.id.details_number_of_rooms_text);
-        detailsPointsOfInterestsText = view.findViewById(R.id.details_points_of_interests_text);
+        detailsPointsOfInterestsText = view.findViewById(R.id.details_points_of_interests_chipgroup);
         detailsPublicationDateText = view.findViewById(R.id.details_publication_date_text);
         detailsSoldDateText = view.findViewById(R.id.details_sold_date_text);
         detailsAgentNameText = view.findViewById(R.id.details_agent_name_text);

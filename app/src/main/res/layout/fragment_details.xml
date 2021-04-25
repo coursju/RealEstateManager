@@ -26,6 +26,31 @@
 
             <Space
                 android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <TextView
+                android:id="@+id/details_images_title"
+                style="@style/Text_title_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/details_images_title" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/details_pics_recyclerview"
+                android:name="com.openclassrooms.realestatemanager.controler.DetailsFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="LinearLayoutManager"
+                tools:context=".controler.DetailsFragment"
+                tools:listitem="@layout/details_fragment_item" />
+
+            <Space
+                android:layout_width="match_parent"
                 android:layout_height="30dp" />
 
             <LinearLayout
@@ -144,31 +169,6 @@
                 android:layout_height="20dp" />
 
             <TextView
-                android:id="@+id/details_images_title"
-                style="@style/Text_title_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/details_images_title" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="15dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/details_pics_recyclerview"
-                android:name="com.openclassrooms.realestatemanager.controler.DetailsFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layoutManager="LinearLayoutManager"
-                tools:context=".controler.DetailsFragment"
-                tools:listitem="@layout/details_fragment_item" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="30dp" />
-
-            <TextView
                 android:id="@+id/details_description_title"
                 style="@style/Text_title_style"
                 android:layout_width="match_parent"
@@ -256,7 +256,7 @@
                 android:layout_height="20dp" />
 
             <TextView
-                android:id="@+id/details_points_of_interests_text"
+                android:id="@+id/details_points_of_interests_chipgroup"
                 style="@style/details_text_style2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

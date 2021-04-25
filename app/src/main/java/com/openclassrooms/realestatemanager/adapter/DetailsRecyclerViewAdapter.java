@@ -4,24 +4,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.openclassrooms.realestatemanager.R;
-import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
 import com.openclassrooms.realestatemanager.model.Photo;
 
 import java.util.List;
 
 public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<DetailsRecyclerViewAdapter.ViewHolder>{
 
-    private EstateWithPhotos estateWithPhotos;
     private List<Photo> photoList;
 
-    public DetailsRecyclerViewAdapter(EstateWithPhotos estateWithPhotos){
-        this.estateWithPhotos = estateWithPhotos;
-        this.photoList = estateWithPhotos.getPhotoList();
+    public DetailsRecyclerViewAdapter(List<Photo> photoList){
+        this.photoList = photoList;
     }
 
     @NonNull
@@ -33,8 +31,8 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<DetailsRecy
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        Bitmap bitmap = ImagesSQLiteConverter.toBitmapListFromJson(mEstateList.get(position).getPhotosString()).get(0);
-//        holder.mImageView.setImageBitmap(bitmap);
+        holder.mImageView.setImageBitmap(photoList.get(position).getPhoto());
+        holder.mTextView.setText(photoList.get(position).getPhotoDescription());
     }
 
     @Override
@@ -45,10 +43,12 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<DetailsRecy
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public final ImageView mImageView;
+        public final TextView mTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.details_item_pict);
+            mTextView = itemView.findViewById(R.id.details_item_txt);
         }
     }
 

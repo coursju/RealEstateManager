@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.controler.BaseEstateActivity;
 import com.openclassrooms.realestatemanager.controler.CreateEstateActivity;
 import com.openclassrooms.realestatemanager.model.Photo;
 
@@ -22,9 +23,9 @@ public class CreateModifyRecyclerAdapter extends RecyclerView.Adapter<CreateModi
 
     private static final String TAG = "CreateModifyRecyclerAd";
     private List<Photo> photoList;
-    private CreateEstateActivity activity;
+    private BaseEstateActivity activity;
 
-    public CreateModifyRecyclerAdapter(List<Photo> photoList, CreateEstateActivity activity){
+    public CreateModifyRecyclerAdapter(List<Photo> photoList, BaseEstateActivity activity){
         this.photoList = photoList;
         this.activity = activity;
     }

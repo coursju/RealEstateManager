@@ -33,15 +33,15 @@ public interface EstateDao {
     Cursor getPhotosWithCursorByID(long id);
 
     // --Estate--
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
     long insertEstate(Estate estate);
 
     @Update
     int updateEstate(Estate estate);
 
     // --Photo--
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insertPhoto(Photo photo);
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
+    void insertPhoto(Photo photo);
 
     @Update
     int updatePhoto(Photo photo);
