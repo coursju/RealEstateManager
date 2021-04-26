@@ -36,6 +36,7 @@ import com.openclassrooms.realestatemanager.viewmodel.EstateListViewModel;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 
 public class DetailsFragment extends Fragment implements OnMapReadyCallback {
@@ -110,18 +111,31 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
 
     public void updateMapAddress(){
         if (mMap != null){
-            List<Address> mAddressList = null;
-            try {
-                if (estateWithPhotos != null)
-                    mAddressList = new Geocoder(getContext()).getFromLocationName(estateWithPhotos.getEstate().getAddress()+" "+estateWithPhotos.getEstate().getCity(), 1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (mAddressList != null && !mAddressList.isEmpty()){
-                LatLng mLatLng = new LatLng(mAddressList.get(0).getLatitude(),mAddressList.get(0).getLongitude());
-                mMap.addMarker(new MarkerOptions().position(mLatLng));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
-            }
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        List<Address> mAddressList = null;
+                        if (estateWithPhotos != null)
+                            mAddressList = new Geocoder(getContext()).getFromLocationName(estateWithPhotos.getEstate().getAddress()+" "+estateWithPhotos.getEstate().getCity(), 1);
+
+                        List<Address> finalMAddressList = mAddressList;
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (finalMAddressList != null && !finalMAddressList.isEmpty()){
+                                    LatLng mLatLng = new LatLng(finalMAddressList.get(0).getLatitude(), finalMAddressList.get(0).getLongitude());
+                                    mMap.addMarker(new MarkerOptions().position(mLatLng));
+                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
+                                }
+                            }
+                        });
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
     }
 
