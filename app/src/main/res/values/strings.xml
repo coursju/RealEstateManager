@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
     <!-- DETAILS   -->
     <string name="details_type_title">Type:</string>
@@ -24,6 +23,7 @@
     <string name="create_submit_button">Create estate</string>
     <string name="create_photo_txt_hint">Add Short Description here</string>
     <string name="create_add_short_txt_button">Valid the text</string>
+    <string name="create_valid_button_empty_photos">You must at less enter one picture!</string>
 
     <!--  MODIFY  -->
     <string name="modify_submit_button">Modify estate</string>
@@ -46,5 +46,30 @@
         <item>Brooklyn</item>
         <item>Manhatann</item>
     </string-array>
+
+    <!--  MENU ICONS  -->
+    <string name="menu_search">Search</string>
+    <string name="menu_map">Map</string>
+    <string name="menu_loan">Bank loan simulator </string>
+    <string name="menu_setting">Setting</string>
+    <string name="title_activity_maps_estate">Map</string>
+    <string name="cancel">cancel</string>
+    <string name="dialog_search_button">search</string>
+
+    <!-- SEARCH -->
+    <string name="search_type_title">Type:</string>
+    <string name="search_statut_title">Statut:</string>
+    <string name="search_agent_title">Agent:</string>
+    <string name="search_city_title">City:</string>
+    <string name="search_address_title">Address:</string>
+    <string name="search_price_title">Price:</string>
+    <string name="search_surface_title">Surface:</string>
+    <string name="search_number_of_rooms_title">Number of rooms:</string>
+    <string name="search_points_of_interest_title">Points of interest:</string>
+    <string name="search_publication_date_title">Publication date:</string>
+    <string name="search_sold_date_title">Sold date:</string>
+
+    <!-- FILTER-->
+    <string name="filtered_clear_filter">Clear Filter</string>
 
 </resources>

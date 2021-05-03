@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="price_slider_values">
+        <item>0.0</item>
+        <item>10000000000.0</item>
+    </array>
+
+    <array name="surface_slider_values">
+        <item>0.0</item>
+        <item>10000.0</item>
+    </array>
+
+    <array name="rooms_slider_values">
+        <item>0.0</item>
+        <item>100.0</item>
+    </array>
+
+    <string-array name="search_statut_array">
+        <item></item>
+        <item>On sale</item>
+        <item>Sold</item>
+    </string-array>
+
+</resources>

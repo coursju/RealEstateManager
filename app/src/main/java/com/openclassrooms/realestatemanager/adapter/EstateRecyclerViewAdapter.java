@@ -23,6 +23,7 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
     private static final String TAG = "EstateRecyclerViewAdapt";
     private final List<EstateWithPhotos> mValues;
     private MainActivity mActivity;
+    private int selected = 0;
 
     public EstateRecyclerViewAdapter(List<EstateWithPhotos> items, Activity activity) {
         mValues = items;
@@ -54,7 +55,7 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final LinearLayout mListVerticalLayout;
+        public final LinearLayout mListLayout;
         public final ImageView mListImage;
         public final TextView mListTypeText;
         public final TextView mListCityText;
@@ -62,7 +63,7 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
 
         public ViewHolder(View view) {
             super(view);
-            mListVerticalLayout = view.findViewById(R.id.list_vertical_layout);
+            mListLayout = view.findViewById(R.id.list_layout);
             mListImage = view.findViewById(R.id.list_image);
             mListTypeText = (TextView) view.findViewById(R.id.list_type_text);
             mListCityText = (TextView) view.findViewById(R.id.list_city_text);
@@ -71,6 +72,9 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
                 @Override
                 public void onClick(View v) {
                     Log.i(EstateRecyclerViewAdapter.TAG,"item clicked!!");
+                    Log.i(TAG, String.valueOf(selected)+" "+String.valueOf(getAdapterPosition()));
+                    selected = getAdapterPosition();
+
                     mActivity.showFragmentDetails(getAdapterPosition());
                 }
             });

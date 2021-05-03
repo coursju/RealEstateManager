@@ -1,7 +1,10 @@
 package com.openclassrooms.realestatemanager.controler;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.model.Estate;
@@ -33,20 +36,30 @@ public class ModifyEstateActivity extends BaseEstateActivity {
 
     @Override
     public void configureValideButton(View view) {
-        long id = estate.getEstateId();
-        Estate mEstate = createEstateObject();
-        mEstate.setEstateId(id);
-        estateListViewModel.updateEstate(mEstate);
-
-        for (Photo photo1 : estateWithPhotos.getPhotoList()){
-            estateListViewModel.deletePhoto(photo1);
-        }
-
-        for (Photo photo : photos){
-            for (Photo photo2 : photos){
-                photo.setEstateCreatorId(id);
-                estateListViewModel.createPhoto(photo2);
+        if (photos != null){
+            if (photos.size() == 0){
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.create_valid_button_empty_photos), Toast.LENGTH_SHORT).show();
             }
+            else{
+                long id = estate.getEstateId();
+                Estate mEstate = createEstateObject();
+                mEstate.setEstateId(id);
+                estateListViewModel.updateEstate(mEstate);
+
+                for (Photo photo1 : estateWithPhotos.getPhotoList()){
+                    estateListViewModel.deletePhoto(photo1);
+                }
+
+                for (Photo photo2 : photos){
+                    photo2.setEstateCreatorId(id);
+                    estateListViewModel.createPhoto(photo2);
+                }
+
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+        }else{
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.create_valid_button_empty_photos), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -73,3 +86,4 @@ public class ModifyEstateActivity extends BaseEstateActivity {
         }
     }
 }
+

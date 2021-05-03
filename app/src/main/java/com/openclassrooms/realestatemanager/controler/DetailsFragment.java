@@ -31,7 +31,6 @@ import com.openclassrooms.realestatemanager.injection.Injection;
 import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Estate;
 import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
-import com.openclassrooms.realestatemanager.utils.GetEstateListCallback;
 import com.openclassrooms.realestatemanager.viewmodel.EstateListViewModel;
 
 import java.io.IOException;
@@ -101,7 +100,7 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Log.d(TAG,"onViewCreated");
         super.onViewCreated(view, savedInstanceState);
-        getChildFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.maps_map, mapFragment).commit();
     }
 
     @Override
@@ -111,14 +110,14 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
 
     public void updateMapAddress(){
         if (mMap != null){
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
+            Executors.newCachedThreadPool().execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         List<Address> mAddressList = null;
                         if (estateWithPhotos != null)
                             mAddressList = new Geocoder(getContext()).getFromLocationName(estateWithPhotos.getEstate().getAddress()+" "+estateWithPhotos.getEstate().getCity(), 1);
-
+                        Log.i(TAG, "updateMapAddress");
                         List<Address> finalMAddressList = mAddressList;
                         getActivity().runOnUiThread(new Runnable() {
                             @Override

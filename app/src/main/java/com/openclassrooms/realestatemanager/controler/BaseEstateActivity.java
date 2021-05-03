@@ -87,6 +87,8 @@ public class BaseEstateActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_estate);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         bindView();
         configureAutoCompleteAdapter();
         configureSpinners();
@@ -356,6 +358,7 @@ public class BaseEstateActivity extends AppCompatActivity {
     }
     public void addNewChip(View view) {
         ChipgroupUtils.addNewChip(this, detailsPointsOfInterestsChipgroup, detailsPointsOfInterestsText.getText().toString());
+        detailsPointsOfInterestsText.setText("");
     }
 
     @Override

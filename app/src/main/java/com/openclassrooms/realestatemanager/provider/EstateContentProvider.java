@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,12 +14,11 @@ import com.openclassrooms.realestatemanager.model.Estate;
 import com.openclassrooms.realestatemanager.model.Photo;
 
 public class EstateContentProvider extends ContentProvider {
+    private static final String TAG = "EstateContentProvider";
 
     public static final String AUTHORITY = "com.openclassrooms.realestatemanager.provider";
     public static final String TABLE_NAME1 = Estate.class.getSimpleName();
-    public static final Uri URI_ITEM1 = Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME1);
-    public static final String TABLE_NAME2 = Photo.class.getSimpleName();
-    public static final Uri URI_ITEM2 = Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME2);
+    public static final Uri URI_ITEM = Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME1);
 
     @Override
     public boolean onCreate() {
@@ -29,19 +29,12 @@ public class EstateContentProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         if (getContext() != null){
-            if (uri == URI_ITEM1){
                 final Cursor cursor;
-                cursor = RealEstateDatabase.getInstance(getContext()).mEstateDao().getEstatesWithCursor();
+                cursor = RealEstateDatabase.getInstance(getContext()).query(selection, null);
                 cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            Log.i(TAG, "Cursor size : "+String.valueOf(cursor.getCount() +"\n"+ selection));
                 return cursor;
-            }else if (uri == URI_ITEM2){
-                final Cursor cursor;
-                cursor = RealEstateDatabase.getInstance(getContext()).mEstateDao().getPhotosWithCursorByID(Long.parseLong(selection));
-                cursor.setNotificationUri(getContext().getContentResolver(), uri);
-                return cursor;
-            }
         }
-
         throw new IllegalArgumentException("Failed to query row for uri " + uri);
     }
 

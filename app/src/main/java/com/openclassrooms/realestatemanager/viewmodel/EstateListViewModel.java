@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.viewmodel;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.realestatemanager.model.Estate;
@@ -8,6 +9,7 @@ import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
 import com.openclassrooms.realestatemanager.model.Photo;
 import com.openclassrooms.realestatemanager.repositories.EstateDataRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicLong;
@@ -16,17 +18,11 @@ public class EstateListViewModel extends ViewModel {
 
     private final EstateDataRepository mEstateDataSource;
     private final Executor executor;
-    private int selectedEstate;
 
     public EstateListViewModel(EstateDataRepository estateDataSource, Executor executor) {
         mEstateDataSource = estateDataSource;
         this.executor = executor;
-        this.selectedEstate = 0;
     }
-
-    public int getSelectedEstate(){return this.selectedEstate;}
-
-    public void setSelectedEstate(int selectedEstate){this.selectedEstate = selectedEstate;}
 
     public LiveData<List<EstateWithPhotos>> getEstateWithPhotos() {
         return mEstateDataSource.getEstateWithPhotos();

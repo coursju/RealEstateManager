@@ -1,9 +1,12 @@
 package com.openclassrooms.realestatemanager.controler;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.model.Photo;
 import com.openclassrooms.realestatemanager.utils.ChipgroupUtils;
 import com.openclassrooms.realestatemanager.utils.Utils;
@@ -34,14 +37,26 @@ public class CreateEstateActivity extends BaseEstateActivity {
     }
 
     @Override
-    public void configureValideButton(View view){
-        long id = estateWithPhotosList.size();
-        Log.i(TAG, "configureValideButton"+String.valueOf(id));
-        estateListViewModel.createEstate(createEstateObject());
+    public void configureValideButton(View view) {
+        if (photos != null){
+            if (photos.size() == 0){
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.create_valid_button_empty_photos), Toast.LENGTH_SHORT).show();
+            }
+            else{
+                long id = estateWithPhotosList.size();
+                Log.i(TAG, "configureValideButton" + String.valueOf(id));
+                estateListViewModel.createEstate(createEstateObject());
 
-        for (Photo photo : photos){
-            photo.setEstateCreatorId(id+1);
-            estateListViewModel.createPhoto(photo);
+                for (Photo photo : photos) {
+                    photo.setEstateCreatorId(id + 1);
+                    estateListViewModel.createPhoto(photo);
+                }
+
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+        }else{
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.create_valid_button_empty_photos), Toast.LENGTH_SHORT).show();
         }
     }
 

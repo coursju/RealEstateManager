@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.utils;
 
+import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ public class ChipgroupUtils {
 
     private static final String TAG = "ChipgroupUtils";
 
-    public static void addNewChip(BaseEstateActivity activity, ChipGroup chipGroup, String keyword){
+    public static void addNewChip(Activity activity, ChipGroup chipGroup, String keyword){
         if (keyword == null || keyword.isEmpty()) {
             Log.i(TAG, "addNewChip: empty text field");
             return;
@@ -38,9 +39,6 @@ public class ChipgroupUtils {
                     parent.removeView(chip);
                 }
             });
-
-            activity.detailsPointsOfInterestsText.setText("");
-
         } catch (Exception e) {
             e.printStackTrace();
             Log.d(TAG, e.getMessage());
