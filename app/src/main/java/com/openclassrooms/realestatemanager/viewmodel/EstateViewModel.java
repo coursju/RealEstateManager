@@ -13,6 +13,7 @@ import java.util.List;
 public class EstateViewModel extends ViewModel {
     private MutableLiveData<Estate> estate;
     private MutableLiveData<List<Photo>> photoList;
+    private MutableLiveData<Integer> selected;
 
     public LiveData<Estate> getEstate() {
         if (estate == null){
@@ -52,5 +53,19 @@ public class EstateViewModel extends ViewModel {
         if (this.photoList != null){
             photoList.getValue().remove(index);
         }
+    }
+
+    public MutableLiveData<Integer> getSelected() {
+        if (this.selected == null){
+            this.selected = new MutableLiveData<Integer>(0);
+        }
+        return selected;
+    }
+
+    public void setSelected(Integer selected) {
+        if (this.selected == null){
+            this.selected = new MutableLiveData<Integer>(0);
+        }
+        this.selected.setValue(selected);
     }
 }

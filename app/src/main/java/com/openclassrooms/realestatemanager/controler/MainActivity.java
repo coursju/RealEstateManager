@@ -16,11 +16,15 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controler.dialog.SearchDialog;
+import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.EstateListFilteredViewModel;
+import com.openclassrooms.realestatemanager.viewmodel.EstateViewModel;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 12;
     private FragmentManager fragmentManager;
     private EstateListFragment mListFragment;
+    private EstateViewModel estateViewModel;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
+        estateViewModel = new ViewModelProvider(this).get(EstateViewModel.class);
     }
 
     @Override
@@ -59,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.menu_loan:
-//                showHelp();
+                Intent intent2 = new Intent(this, LoanSimulatorActivity.class);
+                startActivity(intent2);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -89,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         if (findViewById(R.id.fragment_land_details) != null) {
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_land_list, mListFragment, null)
+                    .replace(R.id.fragment_land_details, new DetailsFragment(estateViewModel.getSelected().getValue()), null)
                     .setReorderingAllowed(true)
                     .addToBackStack("name")
                     .commit();

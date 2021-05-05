@@ -18,6 +18,7 @@ import android.widget.DatePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.slider.RangeSlider;
@@ -29,6 +30,7 @@ import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
 import com.openclassrooms.realestatemanager.model.Photo;
 import com.openclassrooms.realestatemanager.provider.EstateContentProvider;
 import com.openclassrooms.realestatemanager.utils.ChipgroupUtils;
+import com.openclassrooms.realestatemanager.viewmodel.EstateListFilteredViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,6 +59,9 @@ public class SearchDialog extends DialogFragment {
 
     public SearchDialog(EstateListFragment estateListFragment){
         this.estateListFragment = estateListFragment;
+    }
+    public SearchDialog(){
+
     }
 
     @Override
@@ -287,6 +292,6 @@ public class SearchDialog extends DialogFragment {
         }
         cursor.close();
         Log.i(TAG,"cursor passed!");
-        estateListFragment.showFilteredList(estateWithPhotosList);
+        new ViewModelProvider(requireActivity()).get(EstateListFilteredViewModel.class) .setFilteredList(estateWithPhotosList);
     }
 }

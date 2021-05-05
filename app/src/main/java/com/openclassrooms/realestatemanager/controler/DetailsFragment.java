@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,10 +28,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.adapter.DetailsRecyclerViewAdapter;
+import com.openclassrooms.realestatemanager.adapter.EstateRecyclerViewAdapter;
 import com.openclassrooms.realestatemanager.injection.Injection;
 import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Estate;
 import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
+import com.openclassrooms.realestatemanager.viewmodel.EstateListFilteredViewModel;
 import com.openclassrooms.realestatemanager.viewmodel.EstateListViewModel;
 
 import java.io.IOException;
@@ -66,6 +69,7 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
 
     private EstateWithPhotos estateWithPhotos;
     private EstateListViewModel estateListViewModel;
+    private EstateListFilteredViewModel estateListFilteredViewModel;
 
     public DetailsFragment(){}
 
@@ -141,14 +145,27 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
     public void configureViewModel(){
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
         this.estateListViewModel =  ViewModelProviders.of(this, mViewModelFactory).get(EstateListViewModel.class);
-        estateListViewModel.getEstateWithPhotos().observe(this, estates -> {
-            Log.i(TAG,"EstateViewModel observer ");
-
-            estateWithPhotos = estates.get(mPosition);
-            configureView();
-            configureRecyclerView();
-            updateMapAddress();
-            mRecyclerView.setAdapter(new DetailsRecyclerViewAdapter(estateWithPhotos.getPhotoList()));
+        this.estateListFilteredViewModel = new ViewModelProvider(requireActivity()).get(EstateListFilteredViewModel.class);
+        this.estateListFilteredViewModel.getFiltered().observe(this, isFiltered ->{
+            if (isFiltered){
+                estateListFilteredViewModel.getFilteredList().observe(this, filteredList -> {
+                    if (!filteredList.isEmpty() && mPosition < filteredList.size()) {
+                        estateWithPhotos = filteredList.get(mPosition);
+                        configureView();
+                        configureRecyclerView();
+                        updateMapAddress();
+                        mRecyclerView.setAdapter(new DetailsRecyclerViewAdapter(estateWithPhotos.getPhotoList()));
+                    }else {getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();}
+                });
+            }else {
+                estateListViewModel.getEstateWithPhotos().observe(this, estates -> {
+                    estateWithPhotos = estates.get(mPosition);
+                    configureView();
+                    configureRecyclerView();
+                    updateMapAddress();
+                    mRecyclerView.setAdapter(new DetailsRecyclerViewAdapter(estateWithPhotos.getPhotoList()));
+                });
+            }
         });
     }
 

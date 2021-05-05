@@ -3,6 +3,7 @@
 
 
     <!-- DETAILS   -->
+    <string name="details_label">DETAILS</string>
     <string name="details_type_title">Type:</string>
     <string name="details_statut_title">Statut:</string>
     <string name="details_price_title">Price:</string>
@@ -57,6 +58,7 @@
     <string name="dialog_search_button">search</string>
 
     <!-- SEARCH -->
+    <string name="search_label">SEARCH</string>
     <string name="search_type_title">Type:</string>
     <string name="search_statut_title">Statut:</string>
     <string name="search_agent_title">Agent:</string>
@@ -72,4 +74,14 @@
     <!-- FILTER-->
     <string name="filtered_clear_filter">Clear Filter</string>
 
+    <!--  MAP  -->
+    <string name="map_label">MAP</string>
+    <string name="im_here">I\' m here</string>
+    <string name="no_internet_connection">You\' aren\' t connected to internet !</string>
+
+    <!-- NOTIFICATION-->
+    <string name="notification_title">A new Estate has been created</string>
+
+    <!-- LOAN SIMULATOR -->
+    <string name="loan_simulator_label">Bank Loan Simulator</string>
 </resources>

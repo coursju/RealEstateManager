@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.adapter;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controler.MainActivity;
 import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
+import com.openclassrooms.realestatemanager.viewmodel.EstateViewModel;
 
 import java.util.List;
 
@@ -23,11 +26,12 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
     private static final String TAG = "EstateRecyclerViewAdapt";
     private final List<EstateWithPhotos> mValues;
     private MainActivity mActivity;
-    private int selected = 0;
+    private Integer selected;
 
-    public EstateRecyclerViewAdapter(List<EstateWithPhotos> items, Activity activity) {
+    public EstateRecyclerViewAdapter(List<EstateWithPhotos> items, Activity activity, Integer itemSelected) {
         mValues = items;
         mActivity = (MainActivity) activity;
+        this.selected = itemSelected;
     }
 
     @Override
@@ -47,6 +51,10 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
         holder.mListTypeText.setText(mValues.get(position).getEstate().getType());
         holder.mListCityText.setText(mValues.get(position).getEstate().getCity());
         holder.mListPriceText.setText(String.valueOf(mValues.get(position).getEstate().getPrice()));
+
+        if (position == selected && selected != null){
+            holder.mListLayout.setBackgroundColor(mActivity.getResources().getColor(R.color.item_list_selected));
+        }
     }
 
     @Override
@@ -72,10 +80,8 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
                 @Override
                 public void onClick(View v) {
                     Log.i(EstateRecyclerViewAdapter.TAG,"item clicked!!");
-                    Log.i(TAG, String.valueOf(selected)+" "+String.valueOf(getAdapterPosition()));
-                    selected = getAdapterPosition();
-
                     mActivity.showFragmentDetails(getAdapterPosition());
+                    new ViewModelProvider(mActivity).get(EstateViewModel.class).setSelected(getAdapterPosition());
                 }
             });
         }

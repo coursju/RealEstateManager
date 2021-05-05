@@ -1,10 +1,16 @@
 package com.openclassrooms.realestatemanager.controler;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.model.Photo;
@@ -54,6 +60,7 @@ public class CreateEstateActivity extends BaseEstateActivity {
 
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                sendNotification();
             }
         }else{
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.create_valid_button_empty_photos), Toast.LENGTH_SHORT).show();
@@ -68,5 +75,23 @@ public class CreateEstateActivity extends BaseEstateActivity {
                 ChipgroupUtils.addNewChip( this, detailsPointsOfInterestsChipgroup, str[i]);
             }
         }
+    }
+
+    public void sendNotification(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("estate created", "estate created", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(CreateEstateActivity.this, "estate created")
+                .setSmallIcon(R.drawable.add_black_24dp)
+                .setAutoCancel(true)
+                .setContentTitle(getResources().getString(R.string.notification_title))
+                //.setContentText("textContent")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1234, builder.build());
     }
 }

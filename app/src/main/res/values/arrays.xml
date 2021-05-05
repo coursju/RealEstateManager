@@ -2,18 +2,18 @@
 <resources>
 
     <array name="price_slider_values">
-        <item>0.0</item>
-        <item>10000000000.0</item>
+        <item>50000</item>
+        <item>2000000</item>
     </array>
 
     <array name="surface_slider_values">
-        <item>0.0</item>
-        <item>10000.0</item>
+        <item>0</item>
+        <item>10000</item>
     </array>
 
     <array name="rooms_slider_values">
-        <item>0.0</item>
-        <item>100.0</item>
+        <item>0</item>
+        <item>100</item>
     </array>
 
     <string-array name="search_statut_array">

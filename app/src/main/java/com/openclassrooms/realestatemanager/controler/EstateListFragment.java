@@ -26,6 +26,7 @@ import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
 import com.openclassrooms.realestatemanager.utils.GetEstateListCallback;
 import com.openclassrooms.realestatemanager.viewmodel.EstateListFilteredViewModel;
 import com.openclassrooms.realestatemanager.viewmodel.EstateListViewModel;
+import com.openclassrooms.realestatemanager.viewmodel.EstateViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,6 @@ public class EstateListFragment extends Fragment {
 
     private static final String TAG = "EstateListFragment";
 
-    private GetEstateListCallback mGetEstateListCallback;
     private RecyclerView recyclerView;
     private Context context;
     private FloatingActionButton estatesListFloatingBtn;
@@ -43,6 +43,8 @@ public class EstateListFragment extends Fragment {
     private MainActivity mMainActivity;
     private EstateListViewModel estateListViewModel;
     private EstateListFilteredViewModel estateListFilteredViewModel;
+    private EstateViewModel estateViewModel;
+    private List<EstateWithPhotos> estateList4Recycler;
 
     public EstateListFragment(MainActivity mainActivity){
         mMainActivity = mainActivity;
@@ -66,21 +68,8 @@ public class EstateListFragment extends Fragment {
         configureListener();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         configureViewModel();
-
         return view;
     }
-
-//    private void configureGetEstateListCallback(){
-//        this.mGetEstateListCallback = new GetEstateListCallback() {
-//            @Override
-//            public void updateEstateList(List<Estate> estateList) {
-////                mEstateList = estateList;
-//                Log.d(TAG, "into configureGetEstateListCallback ");
-//                recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList, mMainActivity));
-//
-//            }
-//        };
-//    }
 
     private void configureListener(){
         this.estatesListFloatingBtn.setOnClickListener(new View.OnClickListener() {
@@ -98,11 +87,8 @@ public class EstateListFragment extends Fragment {
         });
     }
 
-//    public void reloadEstateList(){
-//        recyclerView.setAdapter(new EstateRecyclerViewAdapter(EstateList.getEstateList(), mMainActivity));
-//    }
-
     public void configureViewModel(){
+        this.estateViewModel = new ViewModelProvider(requireActivity()).get(EstateViewModel.class);
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
         this.estateListViewModel =  ViewModelProviders.of(this, mViewModelFactory).get(EstateListViewModel.class);
         this.estateListFilteredViewModel = new ViewModelProvider(requireActivity()).get(EstateListFilteredViewModel.class);
@@ -111,25 +97,36 @@ public class EstateListFragment extends Fragment {
                 estateListFilteredViewModel.getFilteredList().observe(this, filteredList ->{
                     estatesListFloatingBtn.setVisibility(View.GONE);
                     estateListClearFilter.setVisibility(View.VISIBLE);
-                    recyclerView.setAdapter(new EstateRecyclerViewAdapter(filteredList, mMainActivity));
+                    estateList4Recycler = filteredList;
+                    Integer i = (filteredList.isEmpty())? null : 0;
+                    recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList4Recycler, mMainActivity, i));
                     Log.i(TAG,"estateListFilteredViewModel.getFilteredList().observe");
+                    reloadList();
+
                 });
             }else {
                 estateListViewModel.getEstateWithPhotos().observe(this, estates -> {
                     estatesListFloatingBtn.setVisibility(View.VISIBLE);
                     estateListClearFilter.setVisibility(View.GONE);
-                    recyclerView.setAdapter(new EstateRecyclerViewAdapter(estates, mMainActivity));
+                    estateList4Recycler = estates;
+                    recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList4Recycler, mMainActivity, estateViewModel.getSelected().getValue()));
                     Log.i(TAG,"estateListViewModel.getEstateWithPhotos().observe");
+                    reloadList();
+
                 });
             }
         });
     }
 
-    public void showFilteredList(List<EstateWithPhotos> estateWithPhotosList){
-        estateListFilteredViewModel.setFilteredList(estateWithPhotosList);
+    public void reloadList(){
+        estateViewModel.getSelected().observe(this, selected ->{
+            recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList4Recycler, mMainActivity, selected));
+        });
     }
 
     public void clearFilter(){
         estateListFilteredViewModel.setFiltered(false);
+        estateViewModel.setSelected(0);
+        mMainActivity.configureFragment();
     }
 }
