@@ -159,6 +159,7 @@
                     android:layout_weight="1"
                     android:hint="$10,000.000"
                     android:inputType="number"
+                    android:numeric="integer"
                     android:singleLine="true" />
             </LinearLayout>
 
@@ -285,6 +286,7 @@
                     android:layout_weight="1"
                     android:hint="300 m2"
                     android:inputType="number"
+                    android:numeric="integer"
                     android:singleLine="true" />
 
                 <TextView
@@ -303,6 +305,7 @@
                     android:layout_weight="1"
                     android:hint="15"
                     android:inputType="number"
+                    android:numeric="integer"
                     android:singleLine="true" />
             </LinearLayout>
 

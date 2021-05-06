@@ -116,6 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:numeric="integer"
                     android:text="$10,000.000" />
             </LinearLayout>
 
@@ -221,6 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:numeric="integer"
                     android:text="300 m2" />
 
                 <TextView
@@ -237,6 +239,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:numeric="integer"
                     android:text="15" />
             </LinearLayout>
 

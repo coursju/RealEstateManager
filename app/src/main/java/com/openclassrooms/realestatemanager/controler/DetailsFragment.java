@@ -123,16 +123,18 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
                             mAddressList = new Geocoder(getContext()).getFromLocationName(estateWithPhotos.getEstate().getAddress()+" "+estateWithPhotos.getEstate().getCity(), 1);
                         Log.i(TAG, "updateMapAddress");
                         List<Address> finalMAddressList = mAddressList;
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (finalMAddressList != null && !finalMAddressList.isEmpty()){
-                                    LatLng mLatLng = new LatLng(finalMAddressList.get(0).getLatitude(), finalMAddressList.get(0).getLongitude());
-                                    mMap.addMarker(new MarkerOptions().position(mLatLng));
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
-                                }
-                            }
-                        });
+                       if (getActivity() != null){
+                           getActivity().runOnUiThread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   if (finalMAddressList != null && !finalMAddressList.isEmpty()){
+                                       LatLng mLatLng = new LatLng(finalMAddressList.get(0).getLatitude(), finalMAddressList.get(0).getLongitude());
+                                       mMap.addMarker(new MarkerOptions().position(mLatLng));
+                                       mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
+                                   }
+                               }
+                           });
+                       }
 
                     } catch (IOException e) {
                         e.printStackTrace();

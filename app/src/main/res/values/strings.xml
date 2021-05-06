@@ -84,4 +84,12 @@
 
     <!-- LOAN SIMULATOR -->
     <string name="loan_simulator_label">Bank Loan Simulator</string>
+    <string name="loan_total_amonut_title">Total amount</string>
+    <string name="loan_period_title">Loan period</string>
+    <string name="loan_financial_contribution_title">Financial contribution</string>
+    <string name="loan_result_btn_txt">Show result</string>
+    <string name="loan_enter_amount">Please to enter a amount value !</string>
+    <string name="loan_monthly_result">Your Monthly repayment will be:</string>
+    <string name="loan_cost_result">Your total loan cost will be:</string>
+    <string name="loan_lower_contribution">Please to enter a lower contribution than the amount</string>
 </resources>
