@@ -33,8 +33,10 @@ import com.openclassrooms.realestatemanager.injection.Injection;
 import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Estate;
 import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
+import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.EstateListFilteredViewModel;
 import com.openclassrooms.realestatemanager.viewmodel.EstateListViewModel;
+import com.openclassrooms.realestatemanager.viewmodel.EstateViewModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -189,18 +191,24 @@ public class DetailsFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void configureView(){
+        Boolean isDollard = new ViewModelProvider(requireActivity()).get(EstateViewModel.class).getIsDollard().getValue();
+        String str;
         if (estateWithPhotos != null){
             Estate estate = estateWithPhotos.getEstate();
+            str =
+                    (isDollard)?
+                            "USD "+String.valueOf(estate.getPrice()) :
+                            "EUR "+String.valueOf(Utils.convertDollarToEuro(estate.getPrice()));
             detailsTypeText.setText(estate.getType());
-//            detailsStatutText.setText(estate.getSold());
-            detailsPriceText.setText(estate.getPrice().toString());
+            detailsStatutText.setText((estate.getSold())? "Sold" : "On sale");
+            detailsPriceText.setText(str);
             detailsAddressText.setText(estate.getAddress());
             detailsCityText.setText(estate.getCity());
             detailsDescriptionText.setText(estate.getDescription());
             detailsSurfaceText.setText(estate.getSurface().toString());
             detailsNumberOfRoomsText.setText(estate.getRoomNumber().toString());
             detailsPointsOfInterestsText.setText(estate.getInterestingSpots());
-////            detailsPublicationDateText.setText(estate.g);
+            detailsPublicationDateText.setText(estate.getPublicationDate());
             detailsSoldDateText.setText(estate.getSoldDate());
             detailsAgentNameText.setText(estate.getAgentName());
         }

@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(this, LoanSimulatorActivity.class);
                 startActivity(intent2);
                 return true;
+            case R.id.menu_convert:
+                estateViewModel.setIsDollard();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -119,11 +121,14 @@ public class MainActivity extends AppCompatActivity {
                     .addToBackStack("name")
                     .commit();
         }else{
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_port, mDetailsFragment, null)
-                    .setReorderingAllowed(true)
-                    .addToBackStack("name")
-                    .commit();
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.fragment_port, mDetailsFragment, null)
+//                    .setReorderingAllowed(true)
+//                    .addToBackStack("name")
+//                    .commit();
+            Intent intent = new Intent(this, DetailsActivity.class);
+            intent.putExtra("position", position);
+            startActivity(intent);
         }
     }
 
@@ -173,10 +178,8 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0 &&
                         grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.i(TAG, "Permissions check OK");
-
                 }  else {
                     Log.i(TAG, "Permissions denied");
-
                 }
                 return;
         }

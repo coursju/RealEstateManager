@@ -19,12 +19,25 @@
     <string name="details_agent_name_title">Agent name:</string>
     <string name="details_add_gallery_button">Add from gallery</string>
     <string name="details_add_camera_button">Take a picture</string>
+    <string name="details_type_hint">Loft</string>
+    <string name="details_statut_hint">On sale</string>
+    <string name="details_price_hint">$1 000 000</string>
+    <string name="details_address_hint">15 street, montain - NY 10050</string>
+    <string name="details_city_hint">Brooklyn</string>
+    <string name="details_description_hint">Beautiful space, agreable...</string>
+    <string name="details_surface_hint">300 m2</string>
+    <string name="details_number_of_rooms_hint">15</string>
+    <string name="details_points_of_interest_hint">school</string>
+    <string name="details_publication_date_hint">04/10/2019</string>
+    <string name="details_sold_date_hint">------</string>
+    <string name="details_agent_name_hint">Brian</string>
 
     <!-- CREATE -->
     <string name="create_submit_button">Create estate</string>
     <string name="create_photo_txt_hint">Add Short Description here</string>
     <string name="create_add_short_txt_button">Valid the text</string>
     <string name="create_valid_button_empty_photos">You must at less enter one picture!</string>
+    <string name="create_price_title">Price (USD):</string>
 
     <!--  MODIFY  -->
     <string name="modify_submit_button">Modify estate</string>
@@ -52,6 +65,7 @@
     <string name="menu_search">Search</string>
     <string name="menu_map">Map</string>
     <string name="menu_loan">Bank loan simulator </string>
+    <string name="menu_convert_devices">USD vs EUR</string>
     <string name="menu_setting">Setting</string>
     <string name="title_activity_maps_estate">Map</string>
     <string name="cancel">cancel</string>
@@ -64,7 +78,7 @@
     <string name="search_agent_title">Agent:</string>
     <string name="search_city_title">City:</string>
     <string name="search_address_title">Address:</string>
-    <string name="search_price_title">Price:</string>
+    <string name="search_price_title">Price (USD):</string>
     <string name="search_surface_title">Surface:</string>
     <string name="search_number_of_rooms_title">Number of rooms:</string>
     <string name="search_points_of_interest_title">Points of interest:</string>

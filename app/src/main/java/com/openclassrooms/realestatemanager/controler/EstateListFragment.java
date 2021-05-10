@@ -99,20 +99,20 @@ public class EstateListFragment extends Fragment {
                     estateListClearFilter.setVisibility(View.VISIBLE);
                     estateList4Recycler = filteredList;
                     Integer i = (filteredList.isEmpty())? null : 0;
-                    recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList4Recycler, mMainActivity, i));
+                    recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList4Recycler, mMainActivity, i, estateViewModel));
                     Log.i(TAG,"estateListFilteredViewModel.getFilteredList().observe");
                     reloadList();
-
+                    listenOnConversionClick();
                 });
             }else {
                 estateListViewModel.getEstateWithPhotos().observe(this, estates -> {
                     estatesListFloatingBtn.setVisibility(View.VISIBLE);
                     estateListClearFilter.setVisibility(View.GONE);
                     estateList4Recycler = estates;
-                    recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList4Recycler, mMainActivity, estateViewModel.getSelected().getValue()));
+                    recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList4Recycler, mMainActivity, estateViewModel.getSelected().getValue(), estateViewModel));
                     Log.i(TAG,"estateListViewModel.getEstateWithPhotos().observe");
                     reloadList();
-
+                    listenOnConversionClick();
                 });
             }
         });
@@ -120,7 +120,7 @@ public class EstateListFragment extends Fragment {
 
     public void reloadList(){
         estateViewModel.getSelected().observe(this, selected ->{
-            recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList4Recycler, mMainActivity, selected));
+            recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList4Recycler, mMainActivity, selected, estateViewModel));
         });
     }
 
@@ -128,5 +128,11 @@ public class EstateListFragment extends Fragment {
         estateListFilteredViewModel.setFiltered(false);
         estateViewModel.setSelected(0);
         mMainActivity.configureFragment();
+    }
+
+    public void listenOnConversionClick(){
+        estateViewModel.getIsDollard().observe(this, isDollard ->{
+            recyclerView.setAdapter(new EstateRecyclerViewAdapter(estateList4Recycler, mMainActivity, estateViewModel.getSelected().getValue(), estateViewModel));
+        });
     }
 }

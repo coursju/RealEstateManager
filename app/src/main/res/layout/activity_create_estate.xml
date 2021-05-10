@@ -114,7 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Loft" />
+                    android:hint="@string/details_type_hint" />
 
                 <TextView
                     android:id="@+id/details_statut_title"
@@ -149,7 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/details_price_title" />
+                    android:text="@string/create_price_title" />
 
                 <EditText
                     android:id="@+id/details_price_text"
@@ -157,7 +157,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="$10,000.000"
+                    android:hint="@string/details_price_hint"
                     android:inputType="number"
                     android:numeric="integer"
                     android:singleLine="true" />
@@ -183,7 +183,7 @@
                 style="@style/details_text_style2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="15 street, montain - NY 10050" />
+                android:hint="@string/details_address_hint" />
 
             <Space
                 android:layout_width="match_parent"
@@ -214,7 +214,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Brooklyn"
+                    android:hint="@string/details_city_hint"
                     android:textAlignment="textStart" />
 
                 <Space
@@ -256,7 +256,7 @@
                         style="@style/details_text_style2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Beautiful space, agreable..." />
+                        android:hint="@string/details_description_hint" />
 
                 </LinearLayout>
             </ScrollView>
@@ -284,7 +284,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="300 m2"
+                    android:hint="@string/details_surface_hint"
                     android:inputType="number"
                     android:numeric="integer"
                     android:singleLine="true" />
@@ -303,7 +303,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="15"
+                    android:hint="@string/details_number_of_rooms_hint"
                     android:inputType="number"
                     android:numeric="integer"
                     android:singleLine="true" />
@@ -328,9 +328,11 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/details_points_of_interests_text"
+                    style="@style/details_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3" />
+                    android:layout_weight="3"
+                    android:hint="@string/details_points_of_interest_hint" />
 
                 <Button
                     android:id="@+id/button"
@@ -381,7 +383,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="04/ 10/ 2019"
+                    android:hint="@string/details_publication_date_hint"
                     android:inputType="date"
                     android:singleLine="true"
                     android:textSize="18sp" />
@@ -400,7 +402,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="------"
+                    android:hint="@string/details_sold_date_hint"
                     android:inputType="date"
                     android:singleLine="true"
                     android:textSize="18sp" />
@@ -429,7 +431,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Billy bob skippy" />
+                    android:hint="@string/details_agent_name_hint" />
             </LinearLayout>
 
             <Space

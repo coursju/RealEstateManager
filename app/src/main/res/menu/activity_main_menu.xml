@@ -13,4 +13,10 @@
 
     <item android:id="@+id/menu_loan"
         android:title="@string/menu_loan" />
+
+    <item android:id="@+id/menu_convert"
+        android:title="@string/menu_convert_devices" />
+
+    <item android:id="@+id/menu_setup"
+        android:title="@string/menu_setting" />
 </menu>

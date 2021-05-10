@@ -14,6 +14,7 @@ public class EstateViewModel extends ViewModel {
     private MutableLiveData<Estate> estate;
     private MutableLiveData<List<Photo>> photoList;
     private MutableLiveData<Integer> selected;
+    private MutableLiveData<Boolean> isDollard;
 
     public LiveData<Estate> getEstate() {
         if (estate == null){
@@ -67,5 +68,19 @@ public class EstateViewModel extends ViewModel {
             this.selected = new MutableLiveData<Integer>(0);
         }
         this.selected.setValue(selected);
+    }
+
+    public MutableLiveData<Boolean> getIsDollard() {
+        if (this.isDollard == null){
+            this.isDollard = new MutableLiveData<Boolean>(true);
+        }
+        return isDollard;
+    }
+
+    public void setIsDollard() {
+        if (this.isDollard == null){
+            this.isDollard = new MutableLiveData<Boolean>(true);
+        }
+        this.isDollard.setValue(!this.isDollard.getValue());
     }
 }

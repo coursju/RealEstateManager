@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -112,7 +113,6 @@ public class SearchDialog extends DialogFragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.search_statut_array, android.R.layout.simple_dropdown_item_1line);
         searchStatutTxt.setAdapter(adapter);
-
     }
 
     public String getSQLQueryString(){
@@ -152,19 +152,27 @@ public class SearchDialog extends DialogFragment {
             query += "soldDate = \""+searchSoldDateTxt.getText().toString()+"\"";
         }
         if (searchPriceSlider.getValues().get(0) != searchPriceSlider.getValueFrom()
-        && searchPriceSlider.getValues().get(1) != searchPriceSlider.getValueTo()){
+        || searchPriceSlider.getValues().get(1) != searchPriceSlider.getValueTo()){
             query += sQLQueryIfTest();
             query += "price >= "+String.valueOf(searchPriceSlider.getValues().get(0))+" AND price <= "+String.valueOf(searchPriceSlider.getValues().get(1));
         }
         if (searchSurfaceSlider.getValues().get(0) != searchSurfaceSlider.getValueFrom()
-                && searchSurfaceSlider.getValues().get(1) != searchSurfaceSlider.getValueTo()){
+                || searchSurfaceSlider.getValues().get(1) != searchSurfaceSlider.getValueTo()){
             query += sQLQueryIfTest();
             query += "surface >= "+String.valueOf(searchSurfaceSlider.getValues().get(0))+" AND surface <= "+String.valueOf(searchSurfaceSlider.getValues().get(1));
         }
         if (searchNumberOfRoomsSlider.getValues().get(0) != searchNumberOfRoomsSlider.getValueFrom()
-                && searchNumberOfRoomsSlider.getValues().get(1) != searchNumberOfRoomsSlider.getValueTo()){
+                || searchNumberOfRoomsSlider.getValues().get(1) != searchNumberOfRoomsSlider.getValueTo()){
             query += sQLQueryIfTest();
             query += "roomNumber >= "+String.valueOf(searchNumberOfRoomsSlider.getValues().get(0))+" AND roomNumber <= "+String.valueOf(searchNumberOfRoomsSlider.getValues().get(1));
+        }
+        if (!ChipgroupUtils.saveSelections(searchPointOfInterestChipGroup).equals("")){
+            String[] strTab = ChipgroupUtils.saveSelections(searchPointOfInterestChipGroup).split(",");
+            Toast.makeText(getContext(), String.valueOf(strTab[0]), Toast.LENGTH_SHORT).show();
+            for (String str : strTab){
+                query += sQLQueryIfTest();
+                query += "interestingSpots like \"%"+str+"%\"";
+            }
         }
 
         return "SELECT * FROM Estate "+query;
@@ -225,7 +233,7 @@ public class SearchDialog extends DialogFragment {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             String sYear = String.valueOf(year);
-            String sMonth = String.valueOf(month);
+            String sMonth = String.valueOf(month + 1);
             String sDayOfMonth = String.valueOf(dayOfMonth);
 
             if (dayOfMonth < 10) sDayOfMonth = "0"+sDayOfMonth;

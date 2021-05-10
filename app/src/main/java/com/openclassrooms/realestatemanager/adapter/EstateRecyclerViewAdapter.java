@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controler.MainActivity;
 import com.openclassrooms.realestatemanager.model.EstateWithPhotos;
+import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.EstateViewModel;
 
 import java.util.List;
@@ -27,11 +28,19 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
     private final List<EstateWithPhotos> mValues;
     private MainActivity mActivity;
     private Integer selected;
+    private EstateViewModel estateViewModel;
 
-    public EstateRecyclerViewAdapter(List<EstateWithPhotos> items, Activity activity, Integer itemSelected) {
+//    public EstateRecyclerViewAdapter(List<EstateWithPhotos> items, Activity activity, Integer itemSelected) {
+//        mValues = items;
+//        mActivity = (MainActivity) activity;
+//        this.selected = itemSelected;
+//    }
+
+    public EstateRecyclerViewAdapter(List<EstateWithPhotos> items, Activity activity, Integer itemSelected, EstateViewModel estateViewModel) {
         mValues = items;
         mActivity = (MainActivity) activity;
         this.selected = itemSelected;
+        this.estateViewModel = estateViewModel;
     }
 
     @Override
@@ -42,6 +51,11 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        Boolean isDollard = estateViewModel.getIsDollard().getValue();
+        String str =
+                (isDollard)?
+                        "USD "+String.valueOf(mValues.get(position).getEstate().getPrice()) :
+                        "EUR "+String.valueOf(Utils.convertDollarToEuro(mValues.get(position).getEstate().getPrice()));
         if (mValues.get(position).getPhotoList() != null) {
             if (mValues.get(position).getPhotoList().size() != 0) {
                 Bitmap bitmap = mValues.get(position).getPhotoList().get(0).getPhoto();
@@ -50,10 +64,15 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
         }
         holder.mListTypeText.setText(mValues.get(position).getEstate().getType());
         holder.mListCityText.setText(mValues.get(position).getEstate().getCity());
-        holder.mListPriceText.setText(String.valueOf(mValues.get(position).getEstate().getPrice()));
+        holder.mListPriceText.setText(str);
 
         if (position == selected && selected != null){
             holder.mListLayout.setBackgroundColor(mActivity.getResources().getColor(R.color.item_list_selected));
+        }
+        Log.i(TAG, String.valueOf(mActivity.getResources().getConfiguration().screenWidthDp));
+
+        if (mActivity.getResources().getConfiguration().screenWidthDp > 900){
+            mActivity.showFragmentDetails(selected);
         }
     }
 
