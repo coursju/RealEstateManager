@@ -40,7 +40,7 @@ public class Estate {
         this.soldDate = soldDate;
         this.agentName = agentName;
 
-        Log.i(TAG,"into constructor");
+//        Log.i(TAG,"into constructor");
     }
 
     public long getEstateId() {

@@ -32,7 +32,7 @@ public class Utils {
      * @return
      */
     public static int convertEuroToDollar(int euros){
-        return (int) Math.round(euros / 1.231527094);
+        return (int) Math.round(euros * 1.231527094);
     }
 
     /**
