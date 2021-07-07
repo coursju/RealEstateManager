@@ -1,0 +1,109 @@
+<resources>
+    <string name="app_name">Real Estate Manager</string>
+
+
+    <!-- DETAILS   -->
+    <string name="details_label">DETAILS</string>
+    <string name="details_type_title">Type:</string>
+    <string name="details_statut_title">Statut:</string>
+    <string name="details_price_title">Prix:</string>
+    <string name="details_address_title">Adresse:</string>
+    <string name="details_city_title">Ville:</string>
+    <string name="details_images_title">Images:</string>
+    <string name="details_description_title">Description:</string>
+    <string name="details_surface_title">Surface:</string>
+    <string name="details_number_of_rooms_title">Nombre de chambres:</string>
+    <string name="details_points_of_interest_title">Points d\' interets:</string>
+    <string name="details_publication_date_title">Date de publication:</string>
+    <string name="details_sold_date_title">Date de vente:</string>
+    <string name="details_agent_name_title">Nom de l\' agent:</string>
+    <string name="details_add_gallery_button">Ajouter depuis la galerie</string>
+    <string name="details_add_camera_button">Prendre une photo</string>
+    <string name="details_type_hint">Loft</string>
+    <string name="details_statut_hint">En vente</string>
+    <string name="details_price_hint">$1 000 000</string>
+    <string name="details_address_hint">15 street, montain - NY 10050</string>
+    <string name="details_city_hint">Brooklyn</string>
+    <string name="details_description_hint">Magnifique, spacieux, agréable,...</string>
+    <string name="details_surface_hint">300 m2</string>
+    <string name="details_number_of_rooms_hint">15</string>
+    <string name="details_points_of_interest_hint">Ecole</string>
+    <string name="details_publication_date_hint">04/10/2019</string>
+    <string name="details_sold_date_hint">------</string>
+    <string name="details_agent_name_hint">Brian</string>
+
+    <!-- CREATE -->
+    <string name="create_submit_button">Créer un bien</string>
+    <string name="create_photo_txt_hint">Ajouter une description ici</string>
+    <string name="create_add_short_txt_button">Valider le texte</string>
+    <string name="create_valid_button_empty_photos">Vous devez au minimum ajouter une photo!</string>
+    <string name="create_price_title">Prix (USD):</string>
+
+    <!--  MODIFY  -->
+    <string name="modify_submit_button">Modifier un bien</string>
+
+    <!-- SPINNER-->
+    <string-array name="statut_array">
+        <item>On sale</item>
+        <item>Sold</item>
+    </string-array>
+
+    <!--  TEXTAUTOCOMPLETE  -->
+    <string-array name="type_array">
+        <item>Loft</item>
+        <item>Duplex</item>
+        <item>Penthouse</item>
+        <item>Openspace</item>
+    </string-array>
+
+    <string-array name="city_array">
+        <item>Brooklyn</item>
+        <item>Manhatann</item>
+    </string-array>
+
+    <!--  MENU ICONS  -->
+    <string name="menu_search">Chercher</string>
+    <string name="menu_map">Map</string>
+    <string name="menu_loan">Simulateur de prêt </string>
+    <string name="menu_convert_devices">USD vs EUR</string>
+    <string name="menu_setting">Configuration</string>
+    <string name="title_activity_maps_estate">Map</string>
+    <string name="cancel">Annuler</string>
+    <string name="dialog_search_button">Rechercher</string>
+
+    <!-- SEARCH -->
+    <string name="search_label">Rechercher</string>
+    <string name="search_type_title">Type:</string>
+    <string name="search_statut_title">Statut:</string>
+    <string name="search_agent_title">Agent:</string>
+    <string name="search_city_title">Ville:</string>
+    <string name="search_address_title">Adresse:</string>
+    <string name="search_price_title">Prix (USD):</string>
+    <string name="search_surface_title">Surface:</string>
+    <string name="search_number_of_rooms_title">Nombre de chambres:</string>
+    <string name="search_points_of_interest_title">Points d\' interet:</string>
+    <string name="search_publication_date_title">Date de publication:</string>
+    <string name="search_sold_date_title">Date de vente:</string>
+
+    <!-- FILTER-->
+    <string name="filtered_clear_filter">Réinitialiser le filtre</string>
+
+    <!--  MAP  -->
+    <string name="map_label">MAP</string>
+    <string name="im_here">Je suis là</string>
+    <string name="no_internet_connection">Vous n\' étes pas connecté à internet !</string>
+
+    <!-- NOTIFICATION-->
+    <string name="notification_title">Un nouveau bien a été créé</string>
+
+    <!-- LOAN SIMULATOR -->
+    <string name="loan_simulator_label">Simulateur de prêt</string>
+    <string name="loan_total_amonut_title">Montant total</string>
+    <string name="loan_period_title">Durée du prêt</string>
+    <string name="loan_financial_contribution_title">Apport financier</string>
+    <string name="loan_result_btn_txt">Afficher le resultat</string>
+    <string name="loan_enter_amount">Merci d\' entrée un montant total !</string>
+    <string name="loan_monthly_result">Vos traites mensuelles seront de:</string>
+    <string name="loan_cost_result">Le coût total de votre prêt sera:</string>
+    <string name="loan_lower_contribution">Merci d\' entrée un apport inférieur au montant total</string>
+</resources>
