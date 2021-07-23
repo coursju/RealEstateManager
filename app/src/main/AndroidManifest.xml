@@ -34,6 +34,11 @@
             android:name=".controler.DetailsActivity"
             android:label="@string/details_label"
             android:parentActivityName=".controler.MainActivity" />
+
+        <activity android:name=".controler.DetailsFromMapActivity"
+            android:label="@string/details_label"
+            android:parentActivityName=".controler.MainActivity" />
+
         <activity
             android:name=".controler.MapsEstateActivity"
             android:label="@string/map_label"

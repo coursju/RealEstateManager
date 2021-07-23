@@ -26,6 +26,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -99,7 +100,9 @@ public class MapsEstateActivity extends AppCompatActivity implements OnMapReadyC
                         Location location = task.getResult();
                         if (location != null) {
                             LatLng actualLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                            actualPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title(getResources().getString(R.string.im_here)));
+                            MarkerOptions markerOptions = new MarkerOptions().position(actualLocation).title(getResources().getString(R.string.im_here));
+                            markerOptions .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                            actualPosition = mMap.addMarker(markerOptions);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 15));
                             updateLocation();
                         }
@@ -183,9 +186,11 @@ public class MapsEstateActivity extends AppCompatActivity implements OnMapReadyC
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Intent intent = new Intent(MapsEstateActivity.this, DetailsActivity.class);
-                intent.putExtra("position",(int)marker.getTag());
-                startActivity(intent);
+                if (marker.getTag() != null) {
+                    Intent intent = new Intent(MapsEstateActivity.this, DetailsFromMapActivity.class);
+                    intent.putExtra("position", (int) marker.getTag());
+                    startActivity(intent);
+                }
                 return true;
             }
         });
