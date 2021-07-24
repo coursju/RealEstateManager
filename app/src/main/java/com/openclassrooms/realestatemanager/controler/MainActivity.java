@@ -121,11 +121,6 @@ public class MainActivity extends AppCompatActivity {
                     .addToBackStack("name")
                     .commit();
         }else{
-//            fragmentManager.beginTransaction()
-//                    .replace(R.id.fragment_port, mDetailsFragment, null)
-//                    .setReorderingAllowed(true)
-//                    .addToBackStack("name")
-//                    .commit();
             Intent intent = new Intent(this, DetailsActivity.class);
             intent.putExtra("position", position);
             startActivity(intent);

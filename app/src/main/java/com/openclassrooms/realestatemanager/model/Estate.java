@@ -39,8 +39,6 @@ public class Estate {
         this.publicationDate = publicationDate;
         this.soldDate = soldDate;
         this.agentName = agentName;
-
-//        Log.i(TAG,"into constructor");
     }
 
     public long getEstateId() {

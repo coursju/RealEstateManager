@@ -25,7 +25,7 @@ public class EstateDataRepository {
     public long createEstate(Estate estate){
         long id = mEstateDao.insertEstate(estate);
         Log.i(TAG, String.valueOf(id));
-        return id;//mEstateDao.insertEstate(estate);
+        return id;
         }
     public void createPhoto(Photo photo){   mEstateDao.insertPhoto(photo); }
     public void createPhoto(Photo... photo){  mEstateDao.insertPhotos(photo); }

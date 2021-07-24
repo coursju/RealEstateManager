@@ -30,12 +30,6 @@ public class EstateRecyclerViewAdapter extends RecyclerView.Adapter<EstateRecycl
     private Integer selected;
     private EstateViewModel estateViewModel;
 
-//    public EstateRecyclerViewAdapter(List<EstateWithPhotos> items, Activity activity, Integer itemSelected) {
-//        mValues = items;
-//        mActivity = (MainActivity) activity;
-//        this.selected = itemSelected;
-//    }
-
     public EstateRecyclerViewAdapter(List<EstateWithPhotos> items, Activity activity, Integer itemSelected, EstateViewModel estateViewModel) {
         mValues = items;
         mActivity = (MainActivity) activity;

@@ -49,7 +49,6 @@ public class EstateContentProviderTest {
             Integer p = cursor.getPosition();
             assertThat(p, is(0));
             Log.i(TAG, cursor.getString(12));
-//            assertThat(cursor.getString(12), is("brian")); // put final value
             cursor.close();
     }
 }

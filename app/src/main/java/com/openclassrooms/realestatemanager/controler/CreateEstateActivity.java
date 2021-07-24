@@ -88,7 +88,6 @@ public class CreateEstateActivity extends BaseEstateActivity {
                 .setSmallIcon(R.drawable.add_black_24dp)
                 .setAutoCancel(true)
                 .setContentTitle(getResources().getString(R.string.notification_title))
-                //.setContentText("textContent")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
