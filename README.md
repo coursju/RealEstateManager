@@ -5,6 +5,8 @@ Store and edit Estate,
 watch on map where your estates are located
 loan simulator
 
+![caption](https://github.com/coursju/RealEstateManager/blob/master/video_smartphone.gif)
+
 ![alt text](https://github.com/coursju/RealEstateManager/blob/master/img/map_dezoom.png)
 ![alt text](https://github.com/coursju/RealEstateManager/blob/master/img/menu.png)
 ![alt text](https://github.com/coursju/RealEstateManager/blob/master/img/notification.png)
